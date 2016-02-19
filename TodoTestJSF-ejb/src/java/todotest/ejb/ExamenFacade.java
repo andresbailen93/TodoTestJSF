@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Entities.ejb;
+package todotest.ejb;
 
-import Entities.Respuesta;
+import todotest.entities.Examen;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author andresbailen93
  */
 @Stateless
-public class RespuestaFacade extends AbstractFacade<Respuesta> {
+public class ExamenFacade extends AbstractFacade<Examen> {
 
     @PersistenceContext(unitName = "TodoTestJSF-ejbPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class RespuestaFacade extends AbstractFacade<Respuesta> {
         return em;
     }
 
-    public RespuestaFacade() {
-        super(Respuesta.class);
+    public ExamenFacade() {
+        super(Examen.class);
     }
     
 }
