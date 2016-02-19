@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>TodoTestWeb</title>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/> <!-- load bootstrap css -->
@@ -23,7 +24,7 @@
 
         <div style="margin-bottom: 20px; background-color: black; border-bottom: 1px #31b0d5 solid">
             <a class="brand" style="margin: 0; float: none; text-align:center" href="#">
-                <img class="img-responsive center-block" src="images/final_banner.png" alt="banner"/> > </a>
+                <img class="img-responsive center-block" src="images/final_banner.png" alt="banner"/> </a>
         </div>
 
         <div class="container">
@@ -38,20 +39,20 @@
                         <h:form>
                             <div class="form-group">
                                 <label>DNI</label>
-                                <h:inputText id="dni" class="form-control"  value="#{loginBean.dni}"/>
+                                <h:inputText id="dni" class="form-control"  value="#{loginBean.dni}" required="true">
+                                    <f:validateLength minimum="9" maximum="9"/>
+                                </h:inputText>
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <h:inputSecret  id="password" class="form-control"  value="#{loginBean.password}" redisplay="true" />
+                                <h:inputSecret  id="password" class="form-control"  value="#{loginBean.password}" redisplay="true" required="true" >
+                                    <f:validateLength minimum="4"/>
+
+                                </h:inputSecret>
                             </div>
-                            <!--
-                                                                    <c:if test="${error_login eq true}">
-                                                                        <div class="alert alert-danger small-margin">Usuario / Contraseña incorrecta</div>
-                                                                    </c:if>
-                                                                    <c:if test="${already_identified eq true}">
-                                                                        <div class="alert alert-danger small-margin">Este usuario ya está conectado</div>
-                                                                    </c:if>
-                            -->
+                            <div>
+                                <h:outputText value="Usuario / Contraseña incorrecta" rendered="#{loginBean.error}" class="alert alert-danger small-margin"/>
+                            </div>
                             <p>
                                 <h:commandButton style="align-content: center" action="#{loginBean.doLogin()}" class="btn btn-primary btn-md center-block" value="Acceder"></h:commandButton>
                             </p>

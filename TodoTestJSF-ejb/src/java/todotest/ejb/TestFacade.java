@@ -5,10 +5,12 @@
  */
 package todotest.ejb;
 
+import java.util.List;
 import todotest.entities.Test;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import todotest.entities.Usuario;
 
 /**
  *
@@ -28,5 +30,12 @@ public class TestFacade extends AbstractFacade<Test> {
     public TestFacade() {
         super(Test.class);
     }
-    
+
+    public List<Test> getActiveTest(Usuario u) {
+        //return (List<Test>) em.createNamedQuery("Test.findByActivo").setParameter("activo", 1).getResultList();
+        return (List<Test>) em.createQuery("SELECT t FROM Test t WHERE t.activo = 1 AND t.idTest NOT IN(SELECT e.test.idTest FROM Examen e WHERE e.examenPK.dni = :dni)")
+                .setParameter("dni", u.getDni())
+                .getResultList();
+    }
+
 }
