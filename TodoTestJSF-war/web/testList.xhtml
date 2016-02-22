@@ -29,7 +29,7 @@
     <h:body>
         <div id="header">
             <ui:insert name="header" >
-                <ui:include src="teacherHeader.xhtml" />
+                <ui:include src="studentHeader.xhtml" />
             </ui:insert>
         </div>
         <div class="container" style="margin-top:80px; margin-bottom: 10px">
@@ -43,14 +43,14 @@
                             Seleccionar test
                         </a>
                         <h:form>
-                        <ui:repeat var="test" value="#{testList.list_test}">
-                            <h:commandLink id="VerResultados" action="#{testList}" class="list-group-item">
+                        <ui:repeat var="test" value="#{testListBean.list_test}">
+                            <h:commandLink id="VerResultados" action="#{testListBean}" class="list-group-item">
                                 #{test.nombre}
                             </h:commandLink>
                         </ui:repeat>
                         </h:form>
                         <!--
-                        <c:forEach var="test" items="${testList}">
+                        <c:forEach var="test" items="${testListBean}">
                             <a href="DoTestServlet?id=${test.idTest}" class="list-group-item">${test.nombre}</a>
                         </c:forEach>
                         -->

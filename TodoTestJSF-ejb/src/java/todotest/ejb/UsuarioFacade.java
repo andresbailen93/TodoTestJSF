@@ -5,10 +5,12 @@
  */
 package todotest.ejb;
 
+import java.util.Collection;
 import todotest.entities.Usuario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import todotest.entities.Examen;
 
 /**
  *
@@ -28,5 +30,44 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     public UsuarioFacade() {
         super(Usuario.class);
     }
-    
+
+    public int totalSuccess(Usuario user) {
+        int total = 0;
+        Collection<Examen> ExamenList = user.getExamenCollection();
+        for (Examen ex : ExamenList) {
+            total = total + ex.getAciertos();
+        }
+        return total;
+    }
+
+    public int totalFail(Usuario user) {
+        int total = 0;
+        Collection<Examen> ExamenList = user.getExamenCollection();
+        for (Examen ex : ExamenList) {
+            total = total + ex.getFallos();
+        }
+        return total;
+    }
+
+    public double average(Usuario user) {
+
+        double total = 0.0;
+        int contador = 0;
+        Collection<Examen> ExamenList = user.getExamenCollection();
+        for (Examen ex : ExamenList) {
+            contador++;
+            total = total + (ex.getNota().doubleValue());
+        }
+        return total / contador;
+    }
+
+    public int totalTest(Usuario user) {
+
+        int total = 0;
+        Collection<Examen> ExamenList = user.getExamenCollection();
+        for (Examen ex : ExamenList) {
+            total++;
+        }
+        return total;
+    }
 }
