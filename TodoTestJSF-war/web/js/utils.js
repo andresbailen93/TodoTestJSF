@@ -12,11 +12,8 @@ $(document).ready(function () {
         value++;
     });
 
-
-
     $("#removeRespuesta").on('click', function () {
         $("#answersadded div:last-child").remove();
         value--;
     });
-
 });
