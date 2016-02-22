@@ -1,38 +1,48 @@
- <nav class="navbar navbar-inverse navbar-fixed-top" style="border-color: #31b0d5; margin: 1px; color: white">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header" >
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">TodoTestWeb</a>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:form>
+        <nav class="navbar navbar-inverse navbar-fixed-top" style="border-color: #31b0d5; margin: 1px; color: white">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header" >
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">TodoTestWeb</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="mainPageTeacher.xhtml"><i class="glyphicon glyphicon-home"></i><span class="sr-only">(current)</span></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" >Test <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="ShowAddTestServlet" title="AddTest">Añadir Test</a></li>
+                                <li><a href="TeacherListServlet" title="AddQuestion">Añadir Pregunta</a></li>
+                                <li><a href="ShowActiveTestServlet" title="Enable/DisableTest">Activar/Desactivar Test</a></li> 
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" >Usuario <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="AddUser.jsp" title="AddUser">Añadir Usuario</a></li>
+                                <li><a href="ResultTeacherServlet" title="Results">Resultados</a></li>                         
+                            </ul>
+                        </li>
+                        <li>
+                            <h:commandLink id="Logout" action="#{loginBean.doLogout()}">
+                                <i class="glyphicon glyphicon-off"></i>
+                            </h:commandLink>
+                        </li>
+                    </ul>
+
+                </div><!-- /.navbar-collapse -->
             </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="mainPageTeacher.xhtml"><i class="glyphicon glyphicon-home"></i><span class="sr-only">(current)</span></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" >Test <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="ShowAddTestServlet" title="AddTest">Añadir Test</a></li>
-                            <li><a href="TeacherListServlet" title="AddQuestion">Añadir Pregunta</a></li>
-                            <li><a href="ShowActiveTestServlet" title="Enable/DisableTest">Activar/Desactivar Test</a></li> 
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" >Usuario <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="AddUser.jsp" title="AddUser">Añadir Usuario</a></li>
-                            <li><a href="ResultTeacherServlet" title="Results">Resultados</a></li>                         
-                        </ul>
-                    </li>
-                    <li><a href="SessionDestroyServlet"><i class="glyphicon glyphicon-off"></i></a></li>
-                </ul>
-
-            </div><!-- /.navbar-collapse -->
-        </div>
-    </nav>
+        </nav>
+    </h:form>
+</html>
