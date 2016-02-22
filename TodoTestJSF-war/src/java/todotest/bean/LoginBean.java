@@ -84,5 +84,8 @@ public class LoginBean {
             return "mainPageStudent";
         }
     }
-
+    public String doDestroySession (){
+        this.user = null;
+        return "index";
+    }
 }

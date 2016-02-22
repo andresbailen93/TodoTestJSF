@@ -1,17 +1,18 @@
- <nav class="navbar navbar-inverse navbar-fixed-top" style="border-color: #31b0d5; margin: 1px; color: white">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header" >
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">TodoTestWeb</a>
-            </div>
+<nav class="navbar navbar-inverse navbar-fixed-top" style="border-color: #31b0d5; margin: 1px; color: white">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header" >
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">TodoTestWeb</a>
+        </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <h:form>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="mainPageTeacher.xhtml"><i class="glyphicon glyphicon-home"></i><span class="sr-only">(current)</span></a></li>
@@ -30,9 +31,12 @@
                             <li><a href="ResultTeacherServlet" title="Results">Resultados</a></li>                         
                         </ul>
                     </li>
-                    <li><a href="SessionDestroyServlet"><i class="glyphicon glyphicon-off"></i></a></li>
+                    <li>
+
+                        <a href="SessionDestroyServlet"><i class="glyphicon glyphicon-off"></i></a></li>
                 </ul>
 
             </div><!-- /.navbar-collapse -->
-        </div>
-    </nav>
+        </h:form>
+    </div>
+</nav>
