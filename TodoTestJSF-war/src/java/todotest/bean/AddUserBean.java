@@ -26,7 +26,7 @@ public class AddUserBean {
     private LoginBean loginBean;
     private String dni;
     private String name, surname, password;
-    private short isPermit;
+    private boolean permit;
     private boolean userExisterror = false;
 
     /**
@@ -75,13 +75,13 @@ public class AddUserBean {
         this.password = password;
     }
 
-    public short getIsPermit() {
-        return isPermit;
+    public boolean isPermit() {
+        return permit;
     }
 
-    public void setIsPermit(short isPermit) {
-        this.isPermit = isPermit;
-    }
+    public void setPermit(boolean permit) {
+        this.permit = permit;
+    }  
 
     public boolean isUserExisterror() {
         return userExisterror;
@@ -93,11 +93,13 @@ public class AddUserBean {
     
 
     public String doAddUser() {
-        Usuario user = new Usuario(dni, name, surname, password, isPermit);
+        
+        Usuario user = new Usuario(dni, name, surname, password, (short) ((permit) ? 1 :0));
         Usuario bdUser = usuarioFacade.find(user.getDni());
         if (bdUser == null) {
             usuarioFacade.create(user);
-            return "mainPageStudent";
+            return "mainPageTeacher";
+            
         }else{
             userExisterror = true;
             return "addUser";
