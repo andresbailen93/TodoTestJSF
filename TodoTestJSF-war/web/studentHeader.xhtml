@@ -18,8 +18,17 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="mainPageStudent.xhtml"> Inicio </a></li>
-                        <li><a href="ResultStudentServlet">Resultados</a></li>
-                        <li><a href="AvailableTestListServlet">Realizar test</a></li>
+                        <li>
+                            <h:commandLink id="Resultados" action="#{resultStudentBean.doResultList()}" >
+
+                                <h:outputText value="Resultados" />
+                            </h:commandLink></li>
+                        <li>
+                            <h:commandLink id="ListarTest" action="#{testListStudentBean.doListTest()}" >
+
+                                <h:outputText value="Realizar Test" />
+                            </h:commandLink>
+                        </li>
                         <li>
                             <h:commandLink id="Logout" action="#{loginBean.doLogout()}">
                                 <i class="glyphicon glyphicon-off"></i>

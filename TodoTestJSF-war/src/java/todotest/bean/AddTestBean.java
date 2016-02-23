@@ -11,7 +11,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import todotest.ejb.TestFacade;
 import todotest.entities.Test;
@@ -30,6 +29,8 @@ public class AddTestBean {
     private String name, dni, duration, substraction;
     private boolean errorAddTest = false;
     private ArrayList<String> time,config = null;
+    private Test test;
+
 
     public LoginBean getLoginBean() {
         return loginBean;
@@ -117,7 +118,6 @@ public class AddTestBean {
     
     public String doAddTest(){
         List<Test> list_test = testFacade.findByNameAndDni(name, loginBean.user);
-        Test test;
         if(list_test.isEmpty()){  
             
             test = new Test();

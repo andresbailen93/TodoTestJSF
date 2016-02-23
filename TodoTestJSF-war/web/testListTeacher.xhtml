@@ -34,44 +34,22 @@
         </div>
 
         <div class="container" style="margin-top:80px; margin-bottom: 10px">
-            <div class="col-sm-6 col-sm-offset-3" >
-                <div class="panel panel-primary">
-                    <a href="#" class="list-group-item active">
-                        Bienvenid@ #{loginBean.user.nombre}
-                    </a> 
-                    <div class="panel-body">
-                        <br/>
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="panel responsive panel-primary" style="border-color: #31b0d5;">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">
+                            Seleccionar test
+                        </a>
                         <h:form>
-                            <h:commandLink id="addTest" action="addTest.xhtml" class="list-group-item">
-                                <span class="glyphicon glyphicon-list-alt"></span>
-                                <h:outputText value=" Añadir Test " />
-                            </h:commandLink>
-
-                            <h:commandLink id="addQuestion" action="#{testListTeacherBean.doListTest()}" class="list-group-item">
-                                <span class="glyphicon glyphicon-book"></span>
-                                <h:outputText value=" Añadir Pregunta " />
-                            </h:commandLink>
-
-                            <h:commandLink id="addUser" action="addUser.xhtml" class="list-group-item">
-                                <span class="glyphicon glyphicon-list-alt"></span>
-                                <h:outputText value=" Añadir Usuario " />
-                            </h:commandLink>
-                            
-                            <h:commandLink id="activateTest" action="#{activateTestBean.doListTest()}" class="list-group-item">
-                                <span class="glyphicon glyphicon-book"></span>
-                                <h:outputText value=" Activar/Desactivar Test " />
-                            </h:commandLink>
-                            <h:commandLink id="results" action="#{resultTeacherBean.doResultList()}" class="list-group-item">
-                                <span class="glyphicon glyphicon-book"></span>
-                                <h:outputText value=" Resultados " />
-                            </h:commandLink>
-
-
-
+                            <ui:repeat var="test" value="#{testListTeacherBean.loginBean.user.testCollection}">
+                                <h:commandLink id="VerResultados" action="#{testListTeacherBean}" class="list-group-item">
+                                    #{test.nombre}
+                                </h:commandLink>
+                            </ui:repeat>
                         </h:form>
-                    </div>
+                    </div> 
                 </div>
-            </div> 
+            </div>
         </div>
         <div id="footer">
             <ui:insert name="footer" >

@@ -20,18 +20,18 @@ import todotest.entities.Test;
  */
 @ManagedBean
 @SessionScoped
-public class TestListBean {
+public class TestListStudentBean {
     @EJB
     private TestFacade testFacade;
+
     
     @ManagedProperty(value="#{loginBean}")
     private LoginBean loginBean;
     private List <Test> list_test;
-    private Test selectedTest = null;
     /**
      * Creates a new instance of TestList
      */
-    public TestListBean() {
+    public TestListStudentBean() {
     }
     
     public List<Test> getList_test() {
@@ -52,23 +52,8 @@ public class TestListBean {
     
     public String doListTest(){
         list_test = this.testFacade.getActiveTest(loginBean.user);
-        return "testList";
+        return "testListStudent";
     }
-    
-    public String doTest(Test t) {
-        selectedTest = t;
-        return "testAnswer";
-    }
-
-    public Test getSelectedTest() {
-        return selectedTest;
-    }
-
-    public void setSelectedTest(Test selectedTest) {
-        this.selectedTest = selectedTest;
-    }
-    
-    
     
     
 }
