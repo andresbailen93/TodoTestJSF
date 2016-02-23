@@ -38,8 +38,8 @@ public class Categoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-     @GeneratedValue(generator="CATEGORY_SEQUENCE") 
-    @SequenceGenerator(name="CATEGORY_SEQUENCE",sequenceName="categoria_seq", allocationSize=1) 
+    @GeneratedValue(generator="CATEGORY_SEQUENCE") 
+    @SequenceGenerator(name="CATEGORY_SEQUENCE",sequenceName="categoria_seq", allocationSize=1)
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_CATEGORIA")

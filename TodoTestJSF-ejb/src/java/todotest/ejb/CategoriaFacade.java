@@ -5,6 +5,7 @@
  */
 package todotest.ejb;
 
+import java.util.List;
 import todotest.entities.Categoria;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -28,5 +29,9 @@ public class CategoriaFacade extends AbstractFacade<Categoria> {
     public CategoriaFacade() {
         super(Categoria.class);
     }
-    
+
+    public List<Categoria> findByName(String topicName) { //Devuelve una categoria apartir de su nombre.
+        List<Categoria> list_cat = em.createNamedQuery("Categoria.findByNombre").setParameter("nombre", topicName).getResultList();
+        return list_cat;
+    }
 }
