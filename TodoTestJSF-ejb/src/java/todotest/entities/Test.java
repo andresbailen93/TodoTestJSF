@@ -180,5 +180,9 @@ public class Test implements Serializable {
     public String toString() {
         return "Entities.Test[ idTest=" + idTest + " ]";
     }
+
+    public Boolean setActivo(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
