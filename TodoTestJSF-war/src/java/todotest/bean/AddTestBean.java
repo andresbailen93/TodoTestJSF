@@ -30,6 +30,8 @@ public class AddTestBean {
     private String name, dni, duration, substraction;
     private boolean errorAddTest = false;
     private ArrayList<String> time,config = null;
+    private Test test;
+
 
     public LoginBean getLoginBean() {
         return loginBean;
@@ -117,7 +119,6 @@ public class AddTestBean {
     
     public String doAddTest(){
         List<Test> list_test = testFacade.findByNameAndDni(name, loginBean.user);
-        Test test;
         if(list_test.isEmpty()){  
             
             test = new Test();

@@ -1,12 +1,155 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"  
+>
     <h:head>
-        <title>Facelet Title</title>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>TodoTestWeb</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/> <!-- load bootstrap css -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"/> <!-- load fontawesome -->
+        <link href="css/personalizado.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/utils.js" type="text/javascript"></script>
+
+        <style>
+            body {
+                background:url(9small.png) top left no-repeat #001e28;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+        </style>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <div id="header">
+            <ui:insert name="header" >
+                <ui:include src="teacherHeader.xhtml" />
+            </ui:insert>
+        </div>
+
+        <div class="container" style="margin-top:80px; margin-bottom: 80px">
+
+            <div class="col-sm-6 col-sm-offset-3">
+
+                <div class="panel responsive panel-primary" style="border-color: #31b0d5;">
+
+                    <a href="#" class="list-group-item active">
+                        Añadir pregunta
+                    </a>
+                    <div class="panel-body" style="margin: 15px">
+
+                        <div >     
+                            <h:outputText value="La Pregunta se ha añadido correctamente" rendered="#{addQuestionBean.addQuestion}" class="alert alert-success"/>
+                            <h:outputText value="La categoria se ha añadido correctamente" rendered="#{addQuestionBean.addCategory}" class="alert alert-success"/>
+                            <h:outputText value="No se pudo añadir la categoria" rendered="#{addQuestionBean.errorAddCategory}" class="alert alert-danger"/>
+
+                        </div>
+                        <h:form id="addCategory">
+
+                            <div class="form-group">
+                                <label class="control-label">Nueva categoría: </label>
+                                <h:inputText id="categoryname" class="form-control"  value="#{addQuestionBean.category}" required="true">
+                                    <f:validateLength minimum="1" maximum="50"/>
+                                </h:inputText>
+                                <h:commandButton  class="btn btn-primary btn-xs pull-right" action="#{addQuestionBean.doAddCategory()}" value="Añadir Categoria"/>
+                            </div> 
+                        </h:form>
+
+
+                        <h:form id="addQuestion">
+
+                            <div class="form-group">
+                                <label for="Categoría" class="control-label">Categoría: </label>
+                                <div>
+                                    <h:selectOneMenu id="category" value="#{addQuestionBean.category}" class="form-control" required="true">
+                                        <f:selectItems value="#{addQuestionBean.list_categoria}" var="categoria" itemValue="#{categoria.idCategoria}" itemLabel="#{categoria.nombre}">#{categoria.nombre}</f:selectItems>
+                                    </h:selectOneMenu> 
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+
+                                <label for="Pregunta" class="control-label">Pregunta: </label>
+                                <div >
+                                    <h:inputTextarea id="pregunta" class="form-control" rows="3"  value="#{addQuestionBean.question}"></h:inputTextarea>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+
+                                <label for="Imagen" class="control-label">Selecciona una imagen:</label>
+                                <div>
+                                    <!-- <h:inputFile id="image" value="" class="btn"/>-->
+                                </div>
+
+                            </div>
+
+                            <div class="form-group ">
+
+                                <label for="Respuestas" class="control-label" >Respuestas: </label>
+
+                                <div id="answers">
+                                    <p:outputPanel id="customPanel" style="margin-bottom:10px">
+                                        <p:selectOneRadio id="customRadio" value="#{radioView.color}" layout="custom">
+                                            <f:selectItem itemLabel="Red" itemValue="Red" />
+                                            <f:selectItem itemLabel="Green" itemValue="Green" />
+                                            <f:selectItem itemLabel="Blue" itemValue="Blue" />
+                                        </p:selectOneRadio>
+                                        <h:panelGrid columns="3" cellpadding="5">
+                                            <p:radioButton id="opt1" for="customRadio" itemIndex="0" />
+                                            <h:outputLabel for="opt1" value="Red" />
+                                            <p:inputText/>
+                                            
+                                            <p:radioButton id="opt2" for="customRadio" itemIndex="1" />
+                                            <h:outputLabel for="opt2" value="Green" />
+                                            <p:inputText />
+
+                                        </h:panelGrid>
+                                    </p:outputPanel>
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="btn-group-vertical pull-left">
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-xs " id="boton" name="ActionButton" value="0" >Guardar</button>
+                                    <button type="button" class="btn btn-primary btn-xs" id="addRespuesta"><i class="glyphicon glyphicon-plus"></i></button>
+                                    <button type="button" class="btn btn-primary btn-xs" id="removeRespuesta"><i class="glyphicon glyphicon-minus"></i></button>
+                                </div>
+                            </div>
+                        </h:form>
+
+                        <h:form id="accion">
+                            <div class="btn-group-vertical pull-right">
+                                <button type="submit" class="btn btn-primary btn-xs pull-right" id="boton" name="ActionButton" value="1">Añadir preguntas de una categoria</button>
+
+                                <button type="submit" class="btn btn-primary btn-xs pull-right" id="boton" name="ActionButton" value="2">Volver</button>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div id="footer">
+            <ui:insert name="footer" >
+                <ui:include src="footer.xhtml" />
+            </ui:insert>
+        </div>
     </h:body>
 </html>
 
