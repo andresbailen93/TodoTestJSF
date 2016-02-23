@@ -12,6 +12,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import todotest.ejb.TestFacade;
 import todotest.entities.Test;
 
@@ -20,7 +21,7 @@ import todotest.entities.Test;
  * @author inftel23
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class AddTestBean {
     @EJB
     private TestFacade testFacade;
