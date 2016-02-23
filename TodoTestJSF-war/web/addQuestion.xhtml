@@ -98,27 +98,23 @@
                                 <label for="Respuestas" class="control-label" >Respuestas: </label>
 
                                 <div id="answers">
-                                    <p:outputPanel id="customPanel" style="margin-bottom:10px">
-                                        <p:selectOneRadio id="customRadio" value="#{radioView.color}" layout="custom">
-                                            <f:selectItem itemLabel="Red" itemValue="Red" />
-                                            <f:selectItem itemLabel="Green" itemValue="Green" />
-                                            <f:selectItem itemLabel="Blue" itemValue="Blue" />
-                                        </p:selectOneRadio>
-                                        <h:panelGrid columns="3" cellpadding="5">
-                                            <p:radioButton id="opt1" for="customRadio" itemIndex="0" />
-                                            <h:outputLabel for="opt1" value="Red" />
-                                            <p:inputText/>
-                                            
-                                            <p:radioButton id="opt2" for="customRadio" itemIndex="1" />
-                                            <h:outputLabel for="opt2" value="Green" />
-                                            <p:inputText />
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="respuesta" id="respuesta" value="0" checked="true"/>
+                                    <input type="text" class="form-control " id="Respuesta" name="respuestaText[]" required="true"/>
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
 
-                                        </h:panelGrid>
-                                    </p:outputPanel>
+                                    <input type="radio" name="respuesta" id="respuesta" value="1" />
+                                    <input type="text" class="form-control" id="Respuesta" name="respuestaText[]" required="true"/>
+                                </label>
+                            </div>
+                        </div>
 
-                                </div>
-
-
+                        <div  id="answersadded">
+                        </div>
                                 <div class="form-group">
                                     <div class="btn-group-vertical pull-left">
 

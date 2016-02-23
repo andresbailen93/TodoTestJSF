@@ -6,6 +6,7 @@
 package todotest.bean;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,23 +16,30 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.servlet.http.Part;
 import todotest.ejb.CategoriaFacade;
+import todotest.ejb.PreguntaFacade;
 import todotest.entities.Categoria;
+import todotest.entities.Pregunta;
 import todotest.entities.Respuesta;
+import todotest.entities.Test;
 
 /**
  *
  * @author inftel23
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class AddQuestionBean {
+
+    @EJB
+    private PreguntaFacade preguntaFacade;
     @EJB
     private CategoriaFacade categoriaFacade;
     
-    //@ManagedProperty(value = "#{addTestBean}")
-    //private AddTestBean addTestBean;
+    @ManagedProperty(value = "#{}")
+    private AddTestBean addTestBean;
     
     private String category, question;
     private byte[] image;
@@ -40,6 +48,7 @@ public class AddQuestionBean {
     private boolean addCategory = false;
     private boolean errorAddCategory = false;
     private Categoria categoriaAdd;
+    
 
     //@ManagerProperty(value="#{activateTestBean}")
     // private ActivateTestBean activateTestBean;
@@ -137,7 +146,24 @@ public class AddQuestionBean {
     }
 
     public String doAddQuestion() {
-        return "";
+        List<Categoria> lista_categor = categoriaFacade.findByName(category);
+        
+        
+        //Creamos la pregunta
+        Pregunta pregunta = new Pregunta();
+        pregunta.setIdCategoria(lista_categor.get(0));
+        pregunta.setImagen(null);
+        pregunta.setTexto(question);
+        List<Test> listaTest = new ArrayList<>();
+      //  listaTest.add(test); /*Test debera ser una inyeccion de dependecias o sacado de la sesion */
+        pregunta.setTestCollection(listaTest);
+        
+        preguntaFacade.create(pregunta);
+        this.addQuestion = true;
+        
+        //Añadir respuestas.
+        
+        return "addQuestion";
     }
 
     public String doAddCategory() {

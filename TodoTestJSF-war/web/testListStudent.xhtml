@@ -43,17 +43,12 @@
                             Seleccionar test
                         </a>
                         <h:form>
-                        <ui:repeat var="test" value="#{testListBean.list_test}">
-                            <h:commandLink id="VerResultados" action="#{testListBean}" class="list-group-item">
+                        <ui:repeat var="test" value="#{testListStudentBean.list_test}">
+                            <h:commandLink id="VerResultados" action="#{testListStudentBean}" class="list-group-item">
                                 #{test.nombre}
                             </h:commandLink>
                         </ui:repeat>
                         </h:form>
-                        <!--
-                        <c:forEach var="test" items="${testListBean}">
-                            <a href="DoTestServlet?id=${test.idTest}" class="list-group-item">${test.nombre}</a>
-                        </c:forEach>
-                        -->
                     </div>
 
 
