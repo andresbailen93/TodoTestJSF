@@ -28,6 +28,7 @@ public class TestListStudentBean {
     @ManagedProperty(value="#{loginBean}")
     private LoginBean loginBean;
     private List <Test> list_test;
+    private Test selectedTest;
     /**
      * Creates a new instance of TestList
      */
@@ -53,6 +54,19 @@ public class TestListStudentBean {
     public String doListTest(){
         list_test = this.testFacade.getActiveTest(loginBean.user);
         return "testListStudent";
+    }
+    
+    public String doTest(Test t) {
+        selectedTest = t;
+        return "testAnswer";
+    }
+
+    public Test getSelectedTest() {
+        return selectedTest;
+    }
+
+    public void setSelectedTest(Test selectedTest) {
+        this.selectedTest = selectedTest;
     }
     
     

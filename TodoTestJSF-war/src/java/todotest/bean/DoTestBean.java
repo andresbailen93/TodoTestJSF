@@ -32,8 +32,8 @@ public class DoTestBean {
     private ExamenFacade examenFacade;
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
-    @ManagedProperty(value= "#{testListBean}")
-    private TestListBean testListBean;
+    @ManagedProperty(value= "#{testListStudentBean}")
+    private TestListStudentBean testListBean;
     
     // Datos acerca del test actual
     private CurrentTest currentTest;
@@ -188,11 +188,11 @@ public class DoTestBean {
         this.testWithoutTime = testWithoutTime;
     }
 
-    public TestListBean getTestListBean() {
+    public TestListStudentBean getTestListBean() {
         return testListBean;
     }
 
-    public void setTestListBean(TestListBean testListBean) {
+    public void setTestListBean(TestListStudentBean testListBean) {
         this.testListBean = testListBean;
     }
 
