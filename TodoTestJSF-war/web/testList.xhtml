@@ -44,7 +44,7 @@
                         </a>
                         <h:form>
                         <ui:repeat var="test" value="#{testListBean.list_test}">
-                            <h:commandLink id="VerResultados" action="#{testListBean}" class="list-group-item">
+                            <h:commandLink id="VerResultados" action="#{testListBean.doTest(test)}" class="list-group-item">
                                 #{test.nombre}
                             </h:commandLink>
                         </ui:repeat>

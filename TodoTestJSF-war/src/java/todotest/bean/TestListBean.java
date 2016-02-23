@@ -23,11 +23,11 @@ import todotest.entities.Test;
 public class TestListBean {
     @EJB
     private TestFacade testFacade;
-
     
     @ManagedProperty(value="#{loginBean}")
     private LoginBean loginBean;
     private List <Test> list_test;
+    private Test selectedTest = null;
     /**
      * Creates a new instance of TestList
      */
@@ -54,6 +54,21 @@ public class TestListBean {
         list_test = this.testFacade.getActiveTest(loginBean.user);
         return "testList";
     }
+    
+    public String doTest(Test t) {
+        selectedTest = t;
+        return "testAnswer";
+    }
+
+    public Test getSelectedTest() {
+        return selectedTest;
+    }
+
+    public void setSelectedTest(Test selectedTest) {
+        this.selectedTest = selectedTest;
+    }
+    
+    
     
     
 }

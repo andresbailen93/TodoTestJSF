@@ -56,7 +56,7 @@ public class Pregunta implements Serializable {
     private String texto;
     @Lob
     @Column(name = "IMAGEN")
-    private Serializable imagen;
+    private byte[] imagen;
     @JoinTable(name = "PREGUNTA_TEST", joinColumns = {
         @JoinColumn(name = "ID_PREGUNTA", referencedColumnName = "ID_PREGUNTA")}, inverseJoinColumns = {
         @JoinColumn(name = "ID_TEST", referencedColumnName = "ID_TEST")})
@@ -96,11 +96,11 @@ public class Pregunta implements Serializable {
         this.texto = texto;
     }
 
-    public Serializable getImagen() {
+    public byte[] getImagen() {
         return imagen;
     }
 
-    public void setImagen(Serializable imagen) {
+    public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
 
