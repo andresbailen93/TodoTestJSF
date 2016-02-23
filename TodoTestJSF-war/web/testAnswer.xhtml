@@ -49,7 +49,7 @@
 
                         <div class="panel-body">
                             <!-- Comprobar si hay lista de preguntas -->
-                            <h:form>
+                            <h:form rendered="#{doTestBean.finishedTest eq false}">
                                 <p id="pregunta">(#{doTestBean.currentQuestion} / #{doTestBean.totalQuestions}) #{doTestBean.question.texto}</p>
                                 <p id="chronometer" style="text-align: right; font-size: 18px"></p>
                                 <p:graphicImage value="#{imageBean.questionImage}" rendered="#{doTestBean.isImageQuestion}">
@@ -60,15 +60,12 @@
                                 <h:selectOneRadio id="answer" layout="pageDirection" class="question" value="#{doTestBean.currentUserAnswer}" required="true" requiredMessage="Debe seleccionar una respuesta">
                                     <f:selectItems  value="#{doTestBean.answerList}" var="answer" itemValue="#{answer.idRespuesta}" itemLabel=" #{answer.texto}" />
                                 </h:selectOneRadio>
-                                <!--<ui:repeat var="answer" value="#{doTestBean.answerList}">
-                                    <div><label for="radio-one">
-                                            <input type="radio" name="answer" id="radio-one" value="#{answer.idRespuesta}"/>
-                                            <span class="">#{answer.texto}</span>
-                                        </label></br>   
-                                    </div>
-                                </ui:repeat>-->
                                 <h:commandButton action="#{doTestBean.doNextQuestion()}" rendered="#{doTestBean.lastQuestion eq false}" class="btn btn-primary btn-xs" style="float: right" value="Siguiente"></h:commandButton>
                                 <h:commandButton action="#{doTestBean.doNextQuestion()}" rendered="#{doTestBean.lastQuestion}" class="btn btn-primary btn-xs" style="float: right" value="Finalizar"></h:commandButton>
+                            </h:form>
+                            <h:outputText value="La calificación obtenida es: #{doTestBean.currentTest.mark}" rendered="#{doTestBean.finishedTest}"></h:outputText>
+                            <h:form>
+                                <h:commandButton action="mainPageStudent.xhtml" rendered="#{doTestBean.finishedTest}" class="btn btn-primary btn-xs" style="float: right" value="Página principal"></h:commandButton>
                             </h:form>
                         </div>
                     </div>

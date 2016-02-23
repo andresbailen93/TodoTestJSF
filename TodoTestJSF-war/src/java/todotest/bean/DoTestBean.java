@@ -5,7 +5,12 @@
  */
 package todotest.bean;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -16,6 +21,8 @@ import javax.faces.bean.ViewScoped;
 import todotest.aux.CurrentTest;
 import todotest.ejb.ExamenFacade;
 import todotest.ejb.TestFacade;
+import todotest.entities.Examen;
+import todotest.entities.ExamenPK;
 import todotest.entities.Pregunta;
 import todotest.entities.Respuesta;
 
@@ -26,10 +33,6 @@ import todotest.entities.Respuesta;
 @ManagedBean
 @ViewScoped
 public class DoTestBean {
-    @EJB
-    private TestFacade testFacade;
-    @EJB
-    private ExamenFacade examenFacade;
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
     @ManagedProperty(value= "#{testListStudentBean}")
@@ -43,7 +46,6 @@ public class DoTestBean {
     private Pregunta question;
     private Collection<Respuesta> answerList;
     private boolean lastQuestion = false;
-    private String mark;
     private int currentQuestion;
     private int totalQuestions;
     private int currentTestTime;
@@ -52,6 +54,7 @@ public class DoTestBean {
     private boolean testWithoutTime = false;
     private Long currentUserAnswer;
     private boolean isImageQuestion = false;
+    private boolean finishedTest = false;
     
 
     /**
@@ -132,14 +135,6 @@ public class DoTestBean {
         this.lastQuestion = lastQuestion;
     }
 
-    public String getMark() {
-        return mark;
-    }
-
-    public void setMark(String mark) {
-        this.mark = mark;
-    }
-
     public int getCurrentQuestion() {
         return currentQuestion;
     }
@@ -204,27 +199,6 @@ public class DoTestBean {
         this.currentUserAnswer = currentUserAnswer;
     }
     
-    public String doNextQuestion() {
-        isImageQuestion = false;
-        // Guardamos la respuesta del usuario
-        currentTest.addUserAnswer(currentUserAnswer);
-        // Siguiente pregunta
-        currentQuestion++;
-        List<Pregunta> preguntaList = (List<Pregunta>) currentTest.getTest().getPreguntaCollection();
-        question = preguntaList.get(currentQuestion-1);
-        if (question.getImagen() != null)
-            isImageQuestion = true;
-        // Obtenemos las respuestas
-        answerList = question.getRespuestaCollection();
-        // Actualizamos el tiempo restante
-        if (!testWithoutTime) {
-            currentTest.setTimestamp(System.currentTimeMillis());
-        }
-        if (currentQuestion == totalQuestions)
-            lastQuestion = true;
-        return "textAnswer";
-    }
-
     public boolean isIsImageQuestion() {
         return isImageQuestion;
     }
@@ -233,6 +207,110 @@ public class DoTestBean {
         this.isImageQuestion = isImageQuestion;
     }
     
+        public boolean isFinishedTest() {
+        return finishedTest;
+    }
+
+    public void setFinishedTest(boolean finishedTest) {
+        this.finishedTest = finishedTest;
+    }
+    
+    public String doNextQuestion() {
+        if (!lastQuestion) { // Si hay preguntas
+            isImageQuestion = false;
+            // Guardamos la respuesta del usuario
+            currentTest.addUserAnswer(currentUserAnswer);
+            // Siguiente pregunta
+            currentQuestion++;
+            List<Pregunta> preguntaList = (List<Pregunta>) currentTest.getTest().getPreguntaCollection();
+            question = preguntaList.get(currentQuestion-1);
+            if (question.getImagen() != null)
+                isImageQuestion = true;
+            // Obtenemos las respuestas
+            answerList = question.getRespuestaCollection();
+            // Actualizamos el tiempo restante
+            if (!testWithoutTime) {
+                currentTest.setTimestamp(System.currentTimeMillis());
+            }
+            if (currentQuestion == totalQuestions)
+                lastQuestion = true;
+        } else {
+            // Se ha terminado el test
+            correctTest();
+        }
+        return "textAnswer";
+    }
+    
+    private void correctTest() {
+        int correct = 0;
+        int fail = 0;
+        List<Respuesta> questionsAnswer = null;
+        List<Pregunta> testQuestions = new ArrayList(currentTest.getTest().getPreguntaCollection());
+        // Si ha respondido preguntas
+        if (currentTest.getUserAnswers().size() > 0) {
+            for (int i=0; i<testQuestions.size(); i++) {
+                Pregunta p = testQuestions.get(i);
+                // Recuperamos cual es su respuesta correcta
+                questionsAnswer = new ArrayList(p.getRespuestaCollection());
+                Respuesta correctAnswer = null;
+                for(Respuesta r: questionsAnswer) {
+                    if (r.getCorrecta() == 1) {
+                        correctAnswer = r;
+                        break;
+                    }
+                }
+                // Si la respuesta es correcta
+                if (currentTest.getUserAnswers().size() > i) {
+                    if (correctAnswer.getIdRespuesta().equals(currentTest.getUserAnswers().get(i)))
+                        correct++;
+                    else
+                        fail++;
+                }
+            }
+        }
+        calcMark(correct, fail, testQuestions.size());
+    
+    }
+    
+    private void calcMark(int correct, int fail, int numQuestions) {
+        double mark;
+        double answerMark = (double)10/(numQuestions);
+        // Comprobamos la configuración del test
+     
+        if (currentTest.getTest().getResta() == 0)
+            mark = answerMark*correct;
+        else { // Una mal resta una bien, por tanto sería tener el doble de fallos
+            if (currentTest.getTest().getResta() == 1)
+                mark = (answerMark * correct) - (answerMark * fail);
+            else 
+                mark = (answerMark * correct) - (answerMark * fail/currentTest.getTest().getResta());
+            
+            mark = Math.round(mark*100.0)/100.0;
+        }
+        if (mark < 0)
+            mark = 0;
+        
+        // Guardamos el examen realizado
+        Examen e = new Examen();
+        ExamenPK ePK= new ExamenPK();
+        
+        ePK.setDni(loginBean.user.getDni());
+        ePK.setIdTest(currentTest.getTest().getIdTest());
+        
+        e.setExamenPK(ePK);
+        e.setAciertos((short) correct);
+        e.setFallos((short) fail);
+        e.setFecha(new Date(Calendar.getInstance().getTime().getTime()));
+        e.setNota(new BigDecimal(mark).setScale(2, RoundingMode.CEILING));
+        e.setTest(currentTest.getTest());
+        currentTest.setMark(new BigDecimal(mark).setScale(2, RoundingMode.CEILING));
+        finishedTest = true; // Se ha terminado el test, se muestra la calificación
+        
+        //examenFacade.create(e);
+        
+    }
+
+
     
     
     
