@@ -5,7 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"  
->
+      >
     <h:head>
         <meta charset="UTF-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -98,29 +98,29 @@
                                 <label for="Respuestas" class="control-label" >Respuestas: </label>
 
                                 <div id="answers">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="respuesta" id="respuesta" value="0" checked="true"/>
-                                    <input type="text" class="form-control " id="Respuesta" name="respuestaText[]" required="true"/>
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-
-                                    <input type="radio" name="respuesta" id="respuesta" value="1" />
-                                    <input type="text" class="form-control" id="Respuesta" name="respuestaText[]" required="true"/>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div  id="answersadded">
-                        </div>
-                                <div class="form-group">
-                                    <div class="btn-group-vertical pull-left">
+                                    <div class="radio">
+                                        <label>
+                                            <p:selectOneRadio id="s1" value="" layout="pageDirection" >
+                                                <f:selectItem itemLabel="value 2" itemValue="v2" >
+                                                <p:inputText id="input2" value="#{myBean.input1Value}" />
+                                                </f:selectItem>
+                                                <f:selectItem itemLabel="value 3" itemValue="v3" >
+                                                <p:inputText id="input3" value="#{myBean.input1Value}" />
+                                                </f:selectItem>
+                                            </p:selectOneRadio>
+                                        </label>
+                                    </div>
+                                    <div class="radio">
 
                                     </div>
                                 </div>
 
+                                <div  id="answersadded">
+                                </div>
+                                <div class="form-group">
+                                    <div class="btn-group-vertical pull-left">
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-xs " id="boton" name="ActionButton" value="0" >Guardar</button>
                                     <button type="button" class="btn btn-primary btn-xs" id="addRespuesta"><i class="glyphicon glyphicon-plus"></i></button>

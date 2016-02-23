@@ -41,4 +41,8 @@ public class TestListTeacherBean implements Serializable {
     public String doListTest() {
         return "testListTeacher";
     }
+    
+    public String doAddQuestion(){
+        return "addQuestion";
+    }
 }

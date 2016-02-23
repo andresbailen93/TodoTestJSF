@@ -18,6 +18,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.servlet.http.Part;
+import todotest.aux.RespuestaManager;
 import todotest.ejb.CategoriaFacade;
 import todotest.ejb.PreguntaFacade;
 import todotest.entities.Categoria;
@@ -38,9 +39,6 @@ public class AddQuestionBean {
     @EJB
     private CategoriaFacade categoriaFacade;
     
-    @ManagedProperty(value = "#{}")
-    private AddTestBean addTestBean;
-    
     private String category, question;
     private byte[] image;
     private Collection<Respuesta> respuestaCollection;
@@ -48,16 +46,24 @@ public class AddQuestionBean {
     private boolean addCategory = false;
     private boolean errorAddCategory = false;
     private Categoria categoriaAdd;
+    private Test test;
+    private List<RespuestaManager> nuevaRespuesta;
     
 
     //@ManagerProperty(value="#{activateTestBean}")
     // private ActivateTestBean activateTestBean;
     private List<Categoria> list_categoria;
 
+    public List<RespuestaManager> getNuevaRespuesta() {
+        return nuevaRespuesta;
+    }
+
+    public void setNuevaRespuesta(List<RespuestaManager> nuevaRespuesta) {
+        this.nuevaRespuesta = nuevaRespuesta;
+    }
     public boolean isErrorAddCategory() {
         return errorAddCategory;
     }
-
     public void setErrorAddCategory(boolean errorAddCategory) {
         this.errorAddCategory = errorAddCategory;
     }
@@ -144,7 +150,12 @@ public class AddQuestionBean {
     public void init() {
         list_categoria = categoriaFacade.findAll();
     }
-
+    
+    public String doRedirectAddquestion(Test test){
+        this.test = test;
+        return "addQuestion";
+    }
+    
     public String doAddQuestion() {
         List<Categoria> lista_categor = categoriaFacade.findByName(category);
         
@@ -155,24 +166,27 @@ public class AddQuestionBean {
         pregunta.setImagen(null);
         pregunta.setTexto(question);
         List<Test> listaTest = new ArrayList<>();
-      //  listaTest.add(test); /*Test debera ser una inyeccion de dependecias o sacado de la sesion */
+        listaTest.add(this.test); /*Test debera ser una inyeccion de dependecias o sacado de la sesion */
         pregunta.setTestCollection(listaTest);
         
         preguntaFacade.create(pregunta);
-        this.addQuestion = true;
         
         //Añadir respuestas.
         
+        
+        this.addQuestion = true;
         return "addQuestion";
     }
 
     public String doAddCategory() {
+        addCategory = false;
+        addQuestion = false;
+        this.errorAddCategory = false;
         List<Categoria> listas_categorias = categoriaFacade.findByName(category);
         
         if (listas_categorias.isEmpty()) { //No existe ninguno con el nombre. buscado
             this.categoriaAdd = new Categoria();
             this.categoriaAdd.setNombre(category);
-            System.out.println(category);
             this.categoriaFacade.create(this.categoriaAdd);
             this.list_categoria.add(this.categoriaAdd);
             
@@ -183,6 +197,7 @@ public class AddQuestionBean {
             return "addQuestion";
         }
     }
+
 
     
 }
