@@ -116,12 +116,16 @@ public class AddTestBean {
     
     public String doAddTest(){
         List<Test> list_test = testFacade.findByNameAndDni(name, loginBean.user);
-     
-        if(list_test.isEmpty()){    
-            Test test = new Test();
+        Test test;
+        if(list_test.isEmpty()){  
+            
+            test = new Test();
             test.setNombre(name);
             test.setDni(loginBean.user);
-            test.setDuracion(Integer.parseInt(duration));
+            if(duration.equals("-"))
+                test.setDuracion(0);
+            else
+                test.setDuracion(Integer.parseInt(duration));
             test.setResta(Short.parseShort(substraction));
             test.setActivo((short) 0);
             testFacade.create(test);
