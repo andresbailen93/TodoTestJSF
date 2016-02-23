@@ -22,16 +22,27 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" >Test <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="ShowAddTestServlet" title="AddTest">Añadir Test</a></li>
+                                <li><a href="addTest.xhtml" title="AddTest">Añadir Test</a></li>
                                 <li><a href="TeacherListServlet" title="AddQuestion">Añadir Pregunta</a></li>
-                                <li><a href="ShowActiveTestServlet" title="Enable/DisableTest">Activar/Desactivar Test</a></li> 
+                                <li>
+                                    <h:commandLink id="activateTest" action="#{activateTestBean.doListTest()}" >
+
+                                        <h:outputText value=" Activar/Desactivar Test " />
+                                    </h:commandLink>
+                                </li> 
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" >Usuario <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="AddUser.jsp" title="AddUser">Añadir Usuario</a></li>
-                                <li><a href="ResultTeacherServlet" title="Results">Resultados</a></li>                         
+                                <li><a href="addUser.xhtml" title="AddUser">Añadir Usuario</a></li>
+                                <li>
+                                    <h:commandLink id="resultados" action="#{resultTeacherBean.doResultList()}" >
+
+                                        <h:outputText value=" Resultados " />
+                                    </h:commandLink>
+                                </li>
+
                             </ul>
                         </li>
                         <li>
