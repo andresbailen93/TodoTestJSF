@@ -8,6 +8,8 @@ package todotest.bean;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import todotest.aux.CurrentTest;
 import todotest.ejb.UsuarioFacade;
 import todotest.entities.Usuario;
 
@@ -26,6 +28,7 @@ public class LoginBean {
     private String password = "1234";
     protected Usuario user;
     protected Boolean error = false;
+    //private CurrentTest currentTest;
     //error 0 -> no hay error
     //error 1 -> usuario/contraseña incorrecta
 
@@ -61,6 +64,16 @@ public class LoginBean {
         this.user = user;
     }
 
+    /*public CurrentTest getCurrentTest() {
+        return currentTest;
+    }
+
+    public void setCurrentTest(CurrentTest currentTest) {
+        this.currentTest = currentTest;
+    }*/
+    
+    
+
     /**
      * Creates a new instance of LoginBean
      */
@@ -86,7 +99,7 @@ public class LoginBean {
     }
     
     public String doLogout() {
-        this.user = null;
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "index";
     }
 

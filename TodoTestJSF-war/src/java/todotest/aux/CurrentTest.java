@@ -7,6 +7,10 @@ package todotest.aux;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import todotest.entities.Pregunta;
 import todotest.entities.Test;
 
 /**
@@ -25,6 +29,8 @@ public class CurrentTest {
 
     public CurrentTest(Test test, int currentQuestion) {
         this.test = test;
+        Long seed = System.nanoTime();
+        Collections.shuffle((List<Pregunta>)test.getPreguntaCollection(), new Random(seed));
         this.currentQuestion = currentQuestion;
         userAnswers = new ArrayList();
     }
