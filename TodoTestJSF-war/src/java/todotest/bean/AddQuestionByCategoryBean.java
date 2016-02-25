@@ -55,6 +55,14 @@ public class AddQuestionByCategoryBean implements Serializable {
     private int numPreg;
     private boolean addQuestions = false;
 
+    public AddQuestionBean getAddQuestion() {
+        return addQuestion;
+    }
+
+    public void setAddQuestion(AddQuestionBean addQuestion) {
+        this.addQuestion = addQuestion;
+    }
+    
     public boolean isAddQuestions() {
         return addQuestions;
     }
@@ -117,7 +125,8 @@ public class AddQuestionByCategoryBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        list_categoria = categoriaFacade.findAll();
+        this.list_categoria = categoriaFacade.findAll();
+        
         lis_numPreg = new ArrayList<String>();
         for (int i = 1; i < 15; i++) {
             lis_numPreg.add(String.valueOf(i));
