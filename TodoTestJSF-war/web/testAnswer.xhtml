@@ -7,6 +7,9 @@
           
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+        <f:metadata >
+            <f:event type="preRenderView" listener="#{doTestBean.init()}"/>
+        </f:metadata>
         <meta charset="UTF-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -49,23 +52,31 @@
 
                         <div class="panel-body">
                             <!-- Comprobar si hay lista de preguntas -->
-                            <h:form rendered="#{doTestBean.finishedTest eq false}">
+                            <h:form rendered="#{doTestBean.testListBean.finished eq false}">
                                 <p id="pregunta">(#{doTestBean.currentQuestion} / #{doTestBean.totalQuestions}) #{doTestBean.question.texto}</p>
-                                <p id="chronometer" style="text-align: right; font-size: 18px"></p>
-                                <p:graphicImage value="#{imageBean.questionImage}" rendered="#{doTestBean.isImageQuestion}">
+                                <h:outputText value="#{doTestBean.htmlChronometer}" rendered="${doTestBean.timeLeft > 0}" escape="false" />
+                                <!--<p id="chronometer" style="text-align: right; font-size: 18px"></p>-->
+                                <p:graphicImage value="#{imageBean.questionImage}" rendered="#{doTestBean.isImageQuestion}" class="center-block">
                                     <f:param id="image" name="image" value="#{doTestBean.question.idPregunta}" />
                                 </p:graphicImage>
                                 
-                                <h:message for="answer" class="alert alert-danger form-control"/>
-                                <h:selectOneRadio id="answer" layout="pageDirection" class="question" value="#{doTestBean.currentUserAnswer}" required="true" requiredMessage="Debe seleccionar una respuesta">
+                                <h:outputText class="alert alert-danger small-margin center-block" value="Debe seleccionar una respuesta" rendered="#{doTestBean.errNoAnswerSelected}"/>
+                                <h:selectOneRadio id="answer" layout="pageDirection" class="question" value="#{doTestBean.currentUserAnswer}">
                                     <f:selectItems  value="#{doTestBean.answerList}" var="answer" itemValue="#{answer.idRespuesta}" itemLabel=" #{answer.texto}" />
                                 </h:selectOneRadio>
                                 <h:commandButton action="#{doTestBean.doNextQuestion()}" rendered="#{doTestBean.lastQuestion eq false}" class="btn btn-primary btn-xs" style="float: right" value="Siguiente"></h:commandButton>
                                 <h:commandButton action="#{doTestBean.doNextQuestion()}" rendered="#{doTestBean.lastQuestion}" class="btn btn-primary btn-xs" style="float: right" value="Finalizar"></h:commandButton>
                             </h:form>
-                            <h:outputText value="La calificación obtenida es: #{doTestBean.currentTest.mark}" rendered="#{doTestBean.finishedTest}"></h:outputText>
+                            <h:outputText value="La calificación obtenida es: #{doTestBean.mark}" rendered="#{doTestBean.testListBean.finished}"></h:outputText>
+                            
+                            <p><h:outputText value="Descarga los resultados: " rendered="#{doTestBean.testListBean.finished}" />
+                            <h:outputLink value="pdf/#{doTestBean.loginBean.user.dni}.pdf" rendered="#{doTestBean.testListBean.finished}">
+                                    <img src="images/pdf.png" width="20" height="20" />
+                                </h:outputLink>
+                            
+                            </p>
                             <h:form>
-                                <h:commandButton action="mainPageStudent.xhtml" rendered="#{doTestBean.finishedTest}" class="btn btn-primary btn-xs" style="float: right" value="Página principal"></h:commandButton>
+                                <h:commandButton action="mainPageStudent.xhtml" rendered="#{doTestBean.testListBean.finished}" class="btn btn-primary btn-xs" style="float: right" value="Página principal"></h:commandButton>
                             </h:form>
                         </div>
                     </div>
@@ -74,7 +85,10 @@
         </div>
         <script type="text/javascript" src="js/back.js"></script>
         <script type="text/javascript" src="js/chronometer.js"></script>
-
+        <script type="text/javascript">
+            display = jQuery('#chronometer');
+            startTimer(#{doTestBean.timeLeft}, display);
+        </script>
 
         <div id="footer">
             <ui:insert name="footer" >

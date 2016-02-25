@@ -9,8 +9,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import todotest.aux.CurrentTest;
 import todotest.ejb.TestFacade;
 import todotest.entities.Test;
 
@@ -27,8 +27,12 @@ public class TestListStudentBean {
     
     @ManagedProperty(value="#{loginBean}")
     private LoginBean loginBean;
+    @ManagedProperty(value="#{doTestbean}")
+    private DoTestBean doTestBean;
     private List <Test> list_test;
     private Test selectedTest;
+    private boolean started = false;
+    private boolean finished = false;
     /**
      * Creates a new instance of TestList
      */
@@ -58,7 +62,9 @@ public class TestListStudentBean {
     
     public String doTest(Test t) {
         selectedTest = t;
-        return "testAnswer";
+        started = false;
+        finished = false;
+        return "testAnswer?faces-redirect=true";
     }
 
     public Test getSelectedTest() {
@@ -68,6 +74,29 @@ public class TestListStudentBean {
     public void setSelectedTest(Test selectedTest) {
         this.selectedTest = selectedTest;
     }
-    
+
+    public DoTestBean getDoTestBean() {
+        return doTestBean;
+    }
+
+    public void setDoTestBean(DoTestBean doTestBean) {
+        this.doTestBean = doTestBean;
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
     
 }
