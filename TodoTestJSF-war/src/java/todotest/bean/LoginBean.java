@@ -5,11 +5,17 @@
  */
 package todotest.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import todotest.aux.CurrentTest;
 import todotest.ejb.UsuarioFacade;
 import todotest.entities.Test;
@@ -83,6 +89,15 @@ public class LoginBean implements Serializable{
      */
     public LoginBean() {
     }
+    
+    public void init() {
+        if (this.user == null)
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public String doLogin() {
         
@@ -108,6 +123,6 @@ public class LoginBean implements Serializable{
     public String doLogout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "index";
-    }
+    }	
 
 }
