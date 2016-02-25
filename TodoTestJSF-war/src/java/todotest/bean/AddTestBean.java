@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import todotest.ejb.TestFacade;
 import todotest.entities.Test;
@@ -20,7 +21,7 @@ import todotest.entities.Test;
  * @author inftel23
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class AddTestBean {
     @EJB
     private TestFacade testFacade;
@@ -111,8 +112,8 @@ public class AddTestBean {
     public AddTestBean() {
     }
     
-    
-    public String doInit (){
+    @PostConstruct
+    public void doInit (){
         errorAddTest = false;
         time = new ArrayList <String> ();
         config = new ArrayList <String> ();
@@ -123,7 +124,7 @@ public class AddTestBean {
         for(int i=0 ; i<6 ; i++){
             config.add(String.valueOf(i));
         }
-        return "addTest";
+        
     }
     
     public String doAddTest(){

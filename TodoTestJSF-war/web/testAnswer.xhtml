@@ -69,8 +69,8 @@
                             </h:form>
                             <h:outputText value="La calificación obtenida es: #{doTestBean.mark}" rendered="#{doTestBean.testListBean.finished}"></h:outputText>
                             
-                            <p><h:outputText value="Descarga los resultados: " rendered="#{doTestBean.testListBean.finished}" />
-                            <h:outputLink value="pdf/#{doTestBean.loginBean.user.dni}.pdf" rendered="#{doTestBean.testListBean.finished}">
+                            <p><h:outputText value="Descarga los resultados: " rendered="#{doTestBean.testListBean.generatePdf}" />
+                                <h:outputLink value="pdf/#{doTestBean.loginBean.user.dni}.pdf" rendered="#{doTestBean.testListBean.generatePdf}">
                                     <img src="images/pdf.png" width="20" height="20" />
                                 </h:outputLink>
                             

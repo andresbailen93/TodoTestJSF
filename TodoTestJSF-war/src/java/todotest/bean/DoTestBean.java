@@ -16,20 +16,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.flow.FlowScoped;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import todotest.aux.CurrentTest;
-import todotest.ejb.ExamenFacade;
-import todotest.ejb.TestFacade;
 import todotest.entities.Examen;
 import todotest.entities.ExamenPK;
 import todotest.entities.Pregunta;
@@ -308,6 +299,8 @@ public class DoTestBean {
             }
             // Obtenemos las respuestas
             answerList = (List<Respuesta>) question.getRespuestaCollection();
+            Long seed = System.nanoTime();
+            Collections.shuffle(answerList, new Random(seed));
             if (currentQuestion == totalQuestions) {
                 lastQuestion = true;
             }
@@ -315,7 +308,7 @@ public class DoTestBean {
             // Se ha terminado el test
             currentTest.addUserAnswer(currentUserAnswer);
             correctTest();
-            generatedPdf = generatePDF();
+            testListBean.setGeneratePdf(generatePDF());
             testListBean.setStarted(false);
         }
 
@@ -396,7 +389,7 @@ public class DoTestBean {
 
     private boolean generatePDF() {
         this.path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-        if (testListBean.isFinished()) {
+        if (testListBean.isFinished() && currentTest.getUserAnswers().size() == currentTest.getTest().getPreguntaCollection().size()) {
             ArrayList<ArrayList<Respuesta>> questionAnswerList = new ArrayList();
             ArrayList<Pregunta> questionList = new ArrayList(currentTest.getTest().getPreguntaCollection());
             for (Pregunta p : questionList) {

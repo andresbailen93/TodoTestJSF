@@ -10,7 +10,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import todotest.aux.CurrentTest;
 import todotest.ejb.TestFacade;
 import todotest.entities.Test;
 
@@ -33,6 +32,7 @@ public class TestListStudentBean {
     private Test selectedTest;
     private boolean started = false;
     private boolean finished = false;
+    private boolean generatePdf = false;
     /**
      * Creates a new instance of TestList
      */
@@ -61,10 +61,14 @@ public class TestListStudentBean {
     }
     
     public String doTest(Test t) {
-        selectedTest = t;
-        started = false;
-        finished = false;
-        return "testAnswer?faces-redirect=true";
+        if (t.getPreguntaCollection().size() > 0) {
+            selectedTest = t;
+            started = false;
+            finished = false;
+            generatePdf = false;
+            return "testAnswer?faces-redirect=true";
+        }
+        return "testListStudent";
     }
 
     public Test getSelectedTest() {
@@ -98,5 +102,15 @@ public class TestListStudentBean {
     public void setFinished(boolean finished) {
         this.finished = finished;
     }
+
+    public boolean isGeneratePdf() {
+        return generatePdf;
+    }
+
+    public void setGeneratePdf(boolean generatePdf) {
+        this.generatePdf = generatePdf;
+    }
+    
+    
     
 }
