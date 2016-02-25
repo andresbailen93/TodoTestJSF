@@ -48,7 +48,7 @@ public class AddQuestionBean implements Serializable {
 
     private String question, categoryName;
     private Long category;
-    private Part image;
+    private Part image = null;
     private Collection<Respuesta> respuestaCollection;
     private boolean addQuestion = false;
     private boolean addCategory = false;
@@ -201,6 +201,8 @@ public class AddQuestionBean implements Serializable {
     }
 
     private final byte[] getImageBytes(Part p) {
+        if (p == null)
+            return null;
 
         byte[] imageByteArray = null;
         int read = 0;
@@ -233,6 +235,7 @@ public class AddQuestionBean implements Serializable {
         addQuestion = false;
         this.errorAddCategory = false;
         this.errorAddQuestion = false;
+        
         Categoria categoria = new Categoria();
         categoria.setIdCategoria(category);
         categoria = categoriaFacade.find(category);
@@ -241,6 +244,7 @@ public class AddQuestionBean implements Serializable {
         pregunta.setIdCategoria(categoria);
         pregunta.setImagen(getImageBytes(image));
         pregunta.setTexto(question);
+        
 
         List<Test> listaTest = new ArrayList<>();
         listaTest.add(this.testListTeacher.getTest());
