@@ -17,9 +17,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.servlet.http.Part;
-import todotest.aux.RespuestaManager;
 import todotest.ejb.CategoriaFacade;
 import todotest.ejb.PreguntaFacade;
 import todotest.ejb.RespuestaFacade;
@@ -33,8 +31,11 @@ import todotest.entities.Test;
  * @author inftel23
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class AddQuestionBean implements Serializable {
+    
+    @ManagedProperty(value = "#{loginBean}")
+    private LoginBean loginBean;
 
     @EJB
     private RespuestaFacade respuestaFacade;
@@ -42,14 +43,13 @@ public class AddQuestionBean implements Serializable {
     private PreguntaFacade preguntaFacade;
     @EJB
     private CategoriaFacade categoriaFacade;
-
-    @ManagedProperty(value = "#{testListTeacherBean}")
-    private TestListTeacherBean testListTeacher;
+    
 
     private String question, categoryName;
     private Long category;
-    private Part image;
+    private Part image = null;
     private Collection<Respuesta> respuestaCollection;
+    private ArrayList<String> numPreguntas;
     private boolean addQuestion = false;
     private boolean addCategory = false;
     private boolean errorAddCategory = false;
@@ -60,16 +60,16 @@ public class AddQuestionBean implements Serializable {
     private String incorrectTestAnswer2 = "";
     private String incorrectTestAnswer3 = "";
     private String incorrectTestAnswer4 = "";
-    private Test test;
 
+    
     private List<Categoria> list_categoria;
 
-    public Test getTest() {
-        return test;
+    public ArrayList<String> getNumPreguntas() {
+        return numPreguntas;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setNumPreguntas(ArrayList<String> numPreguntas) {
+        this.numPreguntas = numPreguntas;
     }
 
     public boolean isErrorAddQuestion() {
@@ -120,13 +120,23 @@ public class AddQuestionBean implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public TestListTeacherBean getTestListTeacher() {
+    public LoginBean getLoginBean() {
+        return loginBean;
+    }
+
+    public void setLoginBean(LoginBean loginBean) {
+        this.loginBean = loginBean;
+    }
+    
+    
+
+    /*public TestListTeacherBean getTestListTeacher() {
         return testListTeacher;
     }
 
     public void setTestListTeacher(TestListTeacherBean testListTeacher) {
         this.testListTeacher = testListTeacher;
-    }
+    }*/
 
     public String getCorrectTestAnswer() {
         return correctTestAnswer;
@@ -201,6 +211,8 @@ public class AddQuestionBean implements Serializable {
     }
 
     private final byte[] getImageBytes(Part p) {
+        if (p == null)
+            return null;
 
         byte[] imageByteArray = null;
         int read = 0;
@@ -225,7 +237,7 @@ public class AddQuestionBean implements Serializable {
     @PostConstruct
     public void init() {
         list_categoria = categoriaFacade.findAll();
-        test = testListTeacher.getTest();
+        //test = testListTeacher.getTest();
     }
 
     public String doAddQuestion() {
@@ -233,6 +245,7 @@ public class AddQuestionBean implements Serializable {
         addQuestion = false;
         this.errorAddCategory = false;
         this.errorAddQuestion = false;
+        
         Categoria categoria = new Categoria();
         categoria.setIdCategoria(category);
         categoria = categoriaFacade.find(category);
@@ -241,9 +254,10 @@ public class AddQuestionBean implements Serializable {
         pregunta.setIdCategoria(categoria);
         pregunta.setImagen(getImageBytes(image));
         pregunta.setTexto(question);
+        
 
         List<Test> listaTest = new ArrayList<>();
-        listaTest.add(this.testListTeacher.getTest());
+        listaTest.add(loginBean.getTestAdded());
         /*Test debera ser una inyeccion de dependecias o sacado de la sesion */
         pregunta.setTestCollection(listaTest);
         preguntaFacade.create(pregunta);
@@ -327,6 +341,10 @@ public class AddQuestionBean implements Serializable {
     }
     
     public String doRedirectByCategory() {
+        this.numPreguntas = new ArrayList<>();
+        for ( int i = 1; i <= 15; i++){
+            numPreguntas.add(String.valueOf(i));
+        }
         return "addQuestionByCategory";
     }
 

@@ -12,6 +12,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import todotest.aux.CurrentTest;
 import todotest.ejb.UsuarioFacade;
+import todotest.entities.Test;
 import todotest.entities.Usuario;
 
 /**
@@ -30,7 +31,8 @@ public class LoginBean implements Serializable{
     private String password = "1234";
     protected Usuario user;
     protected Boolean error = false;
-    
+    private Test testAdded;
+
     //private CurrentTest currentTest;
     //error 0 -> no hay error
     //error 1 -> usuario/contraseña incorrecta
@@ -67,13 +69,13 @@ public class LoginBean implements Serializable{
         this.user = user;
     }
 
-    /*public CurrentTest getCurrentTest() {
-        return currentTest;
+    public Test getTestAdded() {
+        return testAdded;
     }
 
-    public void setCurrentTest(CurrentTest currentTest) {
-        this.currentTest = currentTest;
-    }*/
+    public void setTestAdded(Test testAdded) {
+        this.testAdded = testAdded;
+    }
     
     
 

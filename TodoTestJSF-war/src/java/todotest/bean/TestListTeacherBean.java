@@ -10,7 +10,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+//import javax.faces.bean.SessionScoped;
 import todotest.ejb.TestFacade;
 import todotest.entities.Test;
 
@@ -26,16 +28,6 @@ public class TestListTeacherBean implements Serializable {
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
     private List<Test> testList;
-    private Test test;
-
-
-    public Test getTest() {
-        return test;
-    }
-
-    public void setTest(Test test) {
-        this.test = test;
-    }
     
     
     public LoginBean getLoginBean() {
@@ -66,7 +58,7 @@ public class TestListTeacherBean implements Serializable {
     }
     
     public String doAddQuestion(Test test){
-        this.test = test;
+        this.loginBean.setTestAdded(test);
         return "addQuestion";
     }
 }

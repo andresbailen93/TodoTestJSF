@@ -56,7 +56,7 @@
                                 <p id="pregunta">(#{doTestBean.currentQuestion} / #{doTestBean.totalQuestions}) #{doTestBean.question.texto}</p>
                                 <h:outputText value="#{doTestBean.htmlChronometer}" rendered="${doTestBean.timeLeft > 0}" escape="false" />
                                 <!--<p id="chronometer" style="text-align: right; font-size: 18px"></p>-->
-                                <p:graphicImage value="#{imageBean.questionImage}" rendered="#{doTestBean.isImageQuestion}" class="center-block">
+                                <p:graphicImage value="#{imageBean.questionImage}" rendered="#{doTestBean.isImageQuestion}" class="center-block" style="max-height: 256px">
                                     <f:param id="image" name="image" value="#{doTestBean.question.idPregunta}" />
                                 </p:graphicImage>
                                 

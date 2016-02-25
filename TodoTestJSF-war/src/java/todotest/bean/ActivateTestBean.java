@@ -8,12 +8,11 @@ package todotest.bean;
 import todotest.aux.TestManager;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.persistence.Convert;
 import todotest.ejb.TestFacade;
 import todotest.entities.Test;
 
@@ -22,7 +21,7 @@ import todotest.entities.Test;
  * @author alejandroruiz
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class ActivateTestBean {
 
     @EJB
@@ -30,6 +29,7 @@ public class ActivateTestBean {
     
     @ManagedProperty(value="#{loginBean}")
     private LoginBean loginBean;
+    
     private List<Test> list_test;
     private boolean msg = false;
 
@@ -67,35 +67,27 @@ public class ActivateTestBean {
         this.msg = msg;
     }
     
-    
-
-
-    /**
-     * Creates a new instance of ActivateTestBean
-     */
     public ActivateTestBean() {
     }
     
-    public String doListTest(){
+    @PostConstruct
+    public void doListTest(){
         msg = false;
         list_test = testFacade.returnTestfromUser(loginBean.user);
-        list_test_manager = new ArrayList<TestManager> ();
+        list_test_manager = new ArrayList<> ();
          for(Test test: list_test){
             TestManager tm = new TestManager(test, test.getActivo()!=0);
             list_test_manager.add(tm);
         }
 
-        return "activateTest";
+        //return "activateTest";
     }
     
    public String doActualizar(){
       for(TestManager t : list_test_manager){
           Test test = t.getTest();
           test.setActivo((short) ((t.getActivo()) ? 1 :0));
-          testFacade.edit(test);
-          
-          
-          
+          testFacade.edit(test);    
       }
       msg = true;
       return "activateTest";
