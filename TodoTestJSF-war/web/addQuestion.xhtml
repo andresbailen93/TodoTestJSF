@@ -59,7 +59,7 @@
                                 <h:commandButton  class="btn btn-primary btn-xs pull-right" action="#{addQuestionBean.doAddCategory()}" value="Añadir Categoria"/>
                             </div> 
                         </h:form>
-                        <h:form id="addQuestion">
+                        <h:form id="addQuestion" enctype="multipart/form-data">
 
                             <div class="form-group">
                                 <label for="Categoría" class="control-label">Categoría: </label>
@@ -72,6 +72,7 @@
                             <label for="Pregunta" class="control-label">Pregunta: </label>
                             <div>
                                 <h:inputTextarea id="pregunta" class="form-control" rows="3"  value="#{addQuestionBean.question}"></h:inputTextarea>
+                                <h:inputFile value="#{addQuestionBean.image}" style="margin-top: 10px; margin-bottom: 5px"/>
                             </div>
                             <div id="answers">
                                 Introduce la respuesta correcta: 
