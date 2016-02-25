@@ -17,9 +17,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.servlet.http.Part;
-import todotest.aux.RespuestaManager;
 import todotest.ejb.CategoriaFacade;
 import todotest.ejb.PreguntaFacade;
 import todotest.ejb.RespuestaFacade;
@@ -46,8 +44,6 @@ public class AddQuestionBean implements Serializable {
     @EJB
     private CategoriaFacade categoriaFacade;
     
-    //@ManagedProperty(value = "#{testListTeacherBean}")
-    //private TestListTeacherBean testListTeacher;
 
     private String question, categoryName;
     private Long category;
@@ -65,6 +61,7 @@ public class AddQuestionBean implements Serializable {
     private String incorrectTestAnswer3 = "";
     private String incorrectTestAnswer4 = "";
 
+    
     private List<Categoria> list_categoria;
 
     public ArrayList<String> getNumPreguntas() {

@@ -26,6 +26,7 @@ public class LoginBean implements Serializable{
     @EJB
     private UsuarioFacade usuarioFacade;
 
+    
     private String dni = "33333333P";
     private String password = "1234";
     protected Usuario user;
@@ -84,6 +85,9 @@ public class LoginBean implements Serializable{
     }
 
     public String doLogin() {
+        
+        
+        
         this.user = usuarioFacade.find(this.dni);
         this.error = false;
         if (user == null) {

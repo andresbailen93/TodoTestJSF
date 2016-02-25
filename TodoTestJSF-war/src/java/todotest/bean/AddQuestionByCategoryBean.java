@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -45,6 +44,7 @@ public class AddQuestionByCategoryBean implements Serializable {
     private Long category;
     private ArrayList<String> lis_numPreg;
     private int numPreg;
+
     private boolean addQuestions = false;
 
     public boolean isAddQuestions() {
@@ -98,10 +98,11 @@ public class AddQuestionByCategoryBean implements Serializable {
     /**
      * Creates a new instance of AddQuestionByCategoryBean
      */
-    @PostConstruct
+    
     public void init() {
         this.list_categoria = categoriaFacade.findAll();
         lis_numPreg = new ArrayList<String>();
+        
         for (int i = 1; i < 15; i++) {
             lis_numPreg.add(String.valueOf(i));
         }
@@ -112,6 +113,7 @@ public class AddQuestionByCategoryBean implements Serializable {
     }
 
     public String doAddQuestions() {
+        
         this.addQuestions = false;
         Categoria categoria = categoriaFacade.find(category);
         //Collection<Pregunta> lista_preguntas = lista_categoria.get(0).getPreguntaCollection();
