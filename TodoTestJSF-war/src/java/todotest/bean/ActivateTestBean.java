@@ -77,6 +77,7 @@ public class ActivateTestBean {
     }
     
     public String doListTest(){
+        msg = false;
         list_test = testFacade.returnTestfromUser(loginBean.user);
         list_test_manager = new ArrayList<TestManager> ();
          for(Test test: list_test){
@@ -87,15 +88,17 @@ public class ActivateTestBean {
         return "activateTest";
     }
     
-   public void doActualizar(){
+   public String doActualizar(){
       for(TestManager t : list_test_manager){
           Test test = t.getTest();
           test.setActivo((short) ((t.getActivo()) ? 1 :0));
           testFacade.edit(test);
-          msg = true;
-          doListTest();
+          
+          
           
       }
+      msg = true;
+      return "activateTest";
        
     }
     

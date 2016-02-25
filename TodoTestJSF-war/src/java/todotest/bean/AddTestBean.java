@@ -103,8 +103,9 @@ public class AddTestBean {
     public AddTestBean() {
     }
     
-    @PostConstruct
-    public void init (){
+    
+    public String doInit (){
+        errorAddTest = false;
         time = new ArrayList <String> ();
         config = new ArrayList <String> ();
         time.add("-");
@@ -114,9 +115,11 @@ public class AddTestBean {
         for(int i=0 ; i<6 ; i++){
             config.add(String.valueOf(i));
         }
+        return "addTest";
     }
     
     public String doAddTest(){
+        errorAddTest = false;
         List<Test> list_test = testFacade.findByNameAndDni(name, loginBean.user);
         if(list_test.isEmpty()){  
             
@@ -130,12 +133,19 @@ public class AddTestBean {
             test.setResta(Short.parseShort(substraction));
             test.setActivo((short) 0);
             testFacade.create(test);
+            
+            this.name="";
+
             return "addQuestion";
+            
         }
         else{
             this.errorAddTest = true;
+            this.name="";
             return "addTest";
         }
+        
+        
         
     }
 }
