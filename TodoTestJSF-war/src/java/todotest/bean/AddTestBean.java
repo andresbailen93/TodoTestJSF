@@ -141,6 +141,7 @@ public class AddTestBean {
             test.setResta(Short.parseShort(substraction));
             test.setActivo((short) 0);
             testFacade.create(test);
+            loginBean.setTestAdded(test);
             
             this.name="";
 

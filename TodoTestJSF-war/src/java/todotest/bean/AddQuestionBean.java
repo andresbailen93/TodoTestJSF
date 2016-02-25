@@ -33,8 +33,11 @@ import todotest.entities.Test;
  * @author inftel23
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class AddQuestionBean implements Serializable {
+    
+    @ManagedProperty(value = "#{loginBean}")
+    private LoginBean loginBean;
 
     @EJB
     private RespuestaFacade respuestaFacade;
@@ -43,8 +46,8 @@ public class AddQuestionBean implements Serializable {
     @EJB
     private CategoriaFacade categoriaFacade;
     
-    @ManagedProperty(value = "#{testListTeacherBean}")
-    private TestListTeacherBean testListTeacher;
+    //@ManagedProperty(value = "#{testListTeacherBean}")
+    //private TestListTeacherBean testListTeacher;
 
     private String question, categoryName;
     private Long category;
@@ -61,7 +64,6 @@ public class AddQuestionBean implements Serializable {
     private String incorrectTestAnswer2 = "";
     private String incorrectTestAnswer3 = "";
     private String incorrectTestAnswer4 = "";
-    private Test test;
 
     private List<Categoria> list_categoria;
 
@@ -71,14 +73,6 @@ public class AddQuestionBean implements Serializable {
 
     public void setNumPreguntas(ArrayList<String> numPreguntas) {
         this.numPreguntas = numPreguntas;
-    }
-
-    public Test getTest() {
-        return test;
-    }
-
-    public void setTest(Test test) {
-        this.test = test;
     }
 
     public boolean isErrorAddQuestion() {
@@ -129,13 +123,23 @@ public class AddQuestionBean implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public TestListTeacherBean getTestListTeacher() {
+    public LoginBean getLoginBean() {
+        return loginBean;
+    }
+
+    public void setLoginBean(LoginBean loginBean) {
+        this.loginBean = loginBean;
+    }
+    
+    
+
+    /*public TestListTeacherBean getTestListTeacher() {
         return testListTeacher;
     }
 
     public void setTestListTeacher(TestListTeacherBean testListTeacher) {
         this.testListTeacher = testListTeacher;
-    }
+    }*/
 
     public String getCorrectTestAnswer() {
         return correctTestAnswer;
@@ -236,7 +240,7 @@ public class AddQuestionBean implements Serializable {
     @PostConstruct
     public void init() {
         list_categoria = categoriaFacade.findAll();
-        test = testListTeacher.getTest();
+        //test = testListTeacher.getTest();
     }
 
     public String doAddQuestion() {
@@ -256,7 +260,7 @@ public class AddQuestionBean implements Serializable {
         
 
         List<Test> listaTest = new ArrayList<>();
-        listaTest.add(this.testListTeacher.getTest());
+        listaTest.add(loginBean.getTestAdded());
         /*Test debera ser una inyeccion de dependecias o sacado de la sesion */
         pregunta.setTestCollection(listaTest);
         preguntaFacade.create(pregunta);
