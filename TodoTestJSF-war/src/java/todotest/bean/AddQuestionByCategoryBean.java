@@ -6,7 +6,6 @@
 package todotest.bean;
 
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,6 +15,7 @@ import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import todotest.ejb.CategoriaFacade;
 import todotest.ejb.PreguntaFacade;
 import todotest.ejb.TestFacade;
