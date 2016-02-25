@@ -32,7 +32,6 @@ public class LoginBean implements Serializable{
     protected Usuario user;
     protected Boolean error = false;
     private Test testAdded;
-
     //private CurrentTest currentTest;
     //error 0 -> no hay error
     //error 1 -> usuario/contraseña incorrecta
