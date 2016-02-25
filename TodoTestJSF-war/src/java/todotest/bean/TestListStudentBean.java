@@ -33,6 +33,7 @@ public class TestListStudentBean {
     private boolean started = false;
     private boolean finished = false;
     private boolean generatePdf = false;
+    private boolean errTestWithoutQuestions = false;
     /**
      * Creates a new instance of TestList
      */
@@ -54,6 +55,16 @@ public class TestListStudentBean {
     public void setLoginBean(LoginBean loginBean) {
         this.loginBean = loginBean;
     }
+
+    public boolean isErrTestWithoutQuestions() {
+        return errTestWithoutQuestions;
+    }
+
+    public void setErrTestWithoutQuestions(boolean errTestWithoutQuestions) {
+        this.errTestWithoutQuestions = errTestWithoutQuestions;
+    }
+    
+    
     
     public String doListTest(){
         list_test = this.testFacade.getActiveTest(loginBean.user);
@@ -66,8 +77,10 @@ public class TestListStudentBean {
             started = false;
             finished = false;
             generatePdf = false;
+            errTestWithoutQuestions = false;
             return "testAnswer?faces-redirect=true";
         }
+        errTestWithoutQuestions = true;
         return "testListStudent";
     }
 
