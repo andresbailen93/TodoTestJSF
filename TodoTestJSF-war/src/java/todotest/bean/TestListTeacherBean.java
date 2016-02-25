@@ -5,9 +5,7 @@
  */
 package todotest.bean;
 
-import javax.inject.Named;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -23,9 +21,13 @@ import todotest.entities.Test;
 @ManagedBean
 @SessionScoped
 public class TestListTeacherBean implements Serializable {
+    @EJB
+    private TestFacade testFacade;
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
+    private List<Test> testList;
     private Test test;
+
 
     public Test getTest() {
         return test;
@@ -42,6 +44,16 @@ public class TestListTeacherBean implements Serializable {
     public void setLoginBean(LoginBean loginBean) {
         this.loginBean = loginBean;
     }
+
+    public List<Test> getTestList() {
+        return testList;
+    }
+
+    public void setTestList(List<Test> testList) {
+        this.testList = testList;
+    }
+    
+    
     /*
      * Creates a new instance of TestListTeacherBean
      */
@@ -49,6 +61,7 @@ public class TestListTeacherBean implements Serializable {
     }
 
     public String doListTest() {
+        testList = testFacade.returnTestfromUser(loginBean.user);
         return "testListTeacher";
     }
     
