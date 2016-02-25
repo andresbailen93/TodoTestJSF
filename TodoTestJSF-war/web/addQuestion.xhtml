@@ -48,8 +48,8 @@
 
                             <div class="form-group">
                                 <div>
-                                    <h:outputText value="La Pregunta se ha añadido correctamente" rendered="#{addQuestionBean.addQuestion}" class="alert alert-success"/>
-                                    <h:outputText value="La categoria se ha añadido correctamente" rendered="#{addQuestionBean.addCategory}" class="alert alert-success"/>
+                                    <h:outputText value="La Pregunta se ha añadido correctamente" rendered="#{addQuestionBean.addQuestion}" class="alert alert-success center-block small-margin"/>
+                                    <h:outputText value="La categoria se ha añadido correctamente" rendered="#{addQuestionBean.addCategory}" class="alert alert-success center-block small-margin"/>
                                     <h:outputText value="No se pudo añadir la categoria" rendered="#{addQuestionBean.errorAddCategory}" class="alert alert-danger center-block small-margin"/>
                                 </div>
                                 <label class="control-label">Nueva categoría: </label>
@@ -59,6 +59,7 @@
                                 <h:commandButton  class="btn btn-primary btn-xs pull-right" action="#{addQuestionBean.doAddCategory()}" value="Añadir Categoria"/>
                             </div> 
                         </h:form>
+                        
                         <h:form id="addQuestion" enctype="multipart/form-data">
 
                             <div class="form-group">
@@ -69,26 +70,45 @@
                                     </h:selectOneMenu> 
                                 </div>
                             </div>
-                            <label for="Pregunta" class="control-label">Pregunta: </label>
-                            <div>
-                                <h:inputTextarea id="pregunta" class="form-control" rows="3"  value="#{addQuestionBean.question}"></h:inputTextarea>
-                                <h:inputFile value="#{addQuestionBean.image}" style="margin-top: 10px; margin-bottom: 5px"/>
+                            
+                            <div class="form-group">
+                                <label for="Pregunta" class="control-label">Pregunta: </label>
+                                <div>
+                                    <h:inputTextarea id="pregunta" class="form-control" rows="3"  value="#{addQuestionBean.question}"></h:inputTextarea>
+                                    <h:inputFile value="#{addQuestionBean.image}" style="margin-top: 10px; margin-bottom: 5px"/>
+                                </div>
                             </div>
-                            <div id="answers">
-                                Introduce la respuesta correcta: 
-                                <h:inputText value="#{addQuestionBean.correctTestAnswer}" class="form-control" />
+                            
+                            <div class="form-group">
+                                <div id="answers">
+                                    <div >
+                                        <label class="control-label">Introduce la respuesta correcta: </label>
+                                        <div >
+                                        <h:inputText value="#{addQuestionBean.correctTestAnswer}" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Introduce la/s respuesta/s incorrectas: </label> 
+                                    <div>
+                                    <h:inputText value="#{addQuestionBean.incorrectTestAnswer1}" class="form-control" style="margin-bottom: 10px" />
+                                    
+                                    <h:inputText value="#{addQuestionBean.incorrectTestAnswer2}" class="form-control" style="margin-bottom: 10px"/>
+                                  
+                                    <h:inputText value="#{addQuestionBean.incorrectTestAnswer3}" class="form-control" style="margin-bottom: 10px"/>
+                                    
+                                    <h:inputText value="#{addQuestionBean.incorrectTestAnswer4}" class="form-control" style="margin-bottom: 10px"/>
+                                    </div>
 
-                                Introduce la/s respuesta/s incorrectas:           
-                                <h:inputText value="#{addQuestionBean.incorrectTestAnswer1}" class="form-control" />
-                                <h:inputText value="#{addQuestionBean.incorrectTestAnswer2}" class="form-control" />
-                                <h:inputText value="#{addQuestionBean.incorrectTestAnswer3}" class="form-control" />
-                                <h:inputText value="#{addQuestionBean.incorrectTestAnswer4}" class="form-control" />
-
+                                </div>
                             </div>
 
-
-                            <h:commandButton  class="btn btn-primary btn-xs pull-right" action="#{addQuestionBean.doAddQuestion()}" value="Guardar Pregunta"/>
-                            <h:commandButton class="btn btn-primary btn-xs pull-right" action="#{addQuestionBean.doRedirectByCategory()}" value="Añadir Pregunta por Categoria"/>
+                            
+                                <h:commandButton  class="btn btn-primary btn-xs pull-left " action="#{addQuestionBean.doAddQuestion()}" value="Guardar Pregunta"/>
+                            
+                                <h:commandButton class="btn btn-primary btn-xs pull-right " action="#{addQuestionBean.doRedirectByCategory()}" value="Añadir Pregunta por Categoria"/>
+                            
+                            
                         </h:form>
                     </div>
                 </div>
