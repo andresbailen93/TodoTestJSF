@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -98,7 +99,7 @@ public class AddQuestionByCategoryBean implements Serializable {
     /**
      * Creates a new instance of AddQuestionByCategoryBean
      */
-    
+    @PostConstruct
     public void init() {
         this.list_categoria = categoriaFacade.findAll();
         lis_numPreg = new ArrayList<String>();
