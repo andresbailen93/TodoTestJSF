@@ -16,11 +16,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import todotest.aux.CurrentTest;
+import todotest.ejb.ExamenFacade;
 import todotest.entities.Examen;
 import todotest.entities.ExamenPK;
 import todotest.entities.Pregunta;
@@ -34,6 +36,9 @@ import todotest.utils.PDF;
 @ManagedBean
 @SessionScoped
 public class DoTestBean {
+    @EJB
+    private ExamenFacade examenFacade;
+    
 
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
@@ -384,7 +389,7 @@ public class DoTestBean {
         currentTest.setMark(this.mark);
         testListBean.setFinished(true); // Se ha terminado el test, se muestra la calificación
 
-        //examenFacade.create(e);
+        examenFacade.create(e);
     }
 
     private boolean generatePDF() {
