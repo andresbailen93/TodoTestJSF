@@ -52,11 +52,10 @@
                                     <h:inputText class="form-control" value="#{testListTeacherBean.test.nombre}" readonly="true"/>
                                 </div>
                                 <label for="Categoría" class="control-label">Categoría: </label>
-                                <label for="Categoría" class="control-label">Categoría: </label>
                                 <div>
-                                    <h:selectOneMenu id="category" value="#{addQuestionByCategoryBean.category}" class="form-control" required="true">
-                                        <f:selectItems value="#{addQuestionByCategoryBean.list_categoria}" var="categoria" itemValue="#{categoria.idCategoria}" itemLabel="#{categoria.nombre}">#{categoria.nombre}</f:selectItems>
-                                    </h:selectOneMenu> 
+                                  <h:selectOneMenu id="category" value="#{addQuestionByCategoryBean.category}" class="form-control" required="true">
+                                      <f:selectItems value="#{addQuestionByCategoryBean.list_categoria}" var="categoria" itemValue="#{categoria.idCategoria}" itemLabel="#{categoria.nombre}">#{categoria.nombre}</f:selectItems>
+                                    </h:selectOneMenu>
                                 </div>
                                 <br/>
                                 <div class="col-sm-6">

@@ -65,16 +65,6 @@ public class LoginBean implements Serializable{
         this.user = user;
     }
 
-    /*public CurrentTest getCurrentTest() {
-        return currentTest;
-    }
-
-    public void setCurrentTest(CurrentTest currentTest) {
-        this.currentTest = currentTest;
-    }*/
-    
-    
-
     /**
      * Creates a new instance of LoginBean
      */
