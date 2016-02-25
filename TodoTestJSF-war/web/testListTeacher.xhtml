@@ -41,7 +41,7 @@
                             Seleccionar test
                         </a>
                         <h:form>
-                            <ui:repeat var="test" value="#{testListTeacherBean.loginBean.user.testCollection}">
+                            <ui:repeat var="test" value="#{testListTeacherBean.testList}">
                                 <h:commandLink id="VerResultados" action="#{addQuestionBean.doRedirectAddquestion(test)}" class="list-group-item">
                                     #{test.nombre}
                                 </h:commandLink>
