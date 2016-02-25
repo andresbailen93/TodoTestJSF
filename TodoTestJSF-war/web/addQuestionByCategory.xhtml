@@ -54,16 +54,16 @@
                                 <label for="Categoría" class="control-label">Categoría: </label>
                                 <label for="Categoría" class="control-label">Categoría: </label>
                                 <div>
-                                    <h:selectOneMenu id="category" value="#{addQuestionByCategoryBean.category}" class="form-control" required="true">
-                                        <f:selectItems value="#{addQuestionByCategoryBean.list_categoria}" var="categoria" itemValue="#{categoria.idCategoria}" itemLabel="#{categoria.nombre}">#{categoria.nombre}</f:selectItems>
+                                    <h:selectOneMenu id="category" value="#{addQuestionBean.category}" class="form-control" required="true">
+                                        <f:selectItems value="#{addQuestionBean.list_categoria}" var="categoria" itemValue="#{categoria.idCategoria}" itemLabel="#{categoria.nombre}">#{categoria.nombre}</f:selectItems>
                                     </h:selectOneMenu> 
                                 </div>
                                 <br/>
                                 <div class="col-sm-6">
                                     <div>
                                         <label>Numero de preguntas</label>
-                                        <h:selectOneMenu id="numeropreguntas" value="#{addQuestionByCategoryBean.numPreg}" class="form-control">
-                                            <f:selectItems value="#{addQuestionByCategoryBean.lis_numPreg}"/>
+                                        <h:selectOneMenu id="numeropreguntas" value="#{addQuestionByCategoryBean.lis_numPreg}" class="form-control">
+                                            <f:selectItems value="#{numeropreguntas.numPreg}"/>
                                         </h:selectOneMenu> 
                                     </div>
                                 </div>

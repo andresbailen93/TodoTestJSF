@@ -50,7 +50,7 @@
                                 <div>
                                     <h:outputText value="La Pregunta se ha añadido correctamente" rendered="#{addQuestionBean.addQuestion}" class="alert alert-success"/>
                                     <h:outputText value="La categoria se ha añadido correctamente" rendered="#{addQuestionBean.addCategory}" class="alert alert-success"/>
-                                    <h:outputText value="No se pudo añadir la categoria" rendered="#{addQuestionBean.errorAddCategory}" class="alert alert-danger"/>
+                                    <h:outputText value="No se pudo añadir la categoria" rendered="#{addQuestionBean.errorAddCategory}" class="alert alert-danger center-block small-margin"/>
                                 </div>
                                 <label class="control-label">Nueva categoría: </label>
                                 <h:inputText id="categoryname" class="form-control"  value="#{addQuestionBean.categoryName}" required="true">

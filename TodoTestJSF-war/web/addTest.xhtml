@@ -40,12 +40,16 @@
                         Añadir test
                     </a>
                     <div class="panel-body">
-                        <div>
-                            <h:outputText value="Ya existe un test con ese nombre" rendered="#{addTestBean.errorAddTest}" class="alert alert-danger small-margin"/>
-                        </div>
+
                         <!-- AddTest FORM -->
                         <h:form>
                             <div class="form-group ">
+                                
+                                    <h:outputText value="Ya existe un test con ese nombre" rendered="#{addTestBean.errorAddTest}" class="alert alert-danger center-block small-margin"/>
+                                
+                                <div>
+                                    
+                                </div>
                                 <label>Nombre Test</label>
                                 <h:inputText id="testname" class="form-control"  value="#{addTestBean.name}" required="true">
                                     <f:validateLength minimum="3" maximum="50"/>

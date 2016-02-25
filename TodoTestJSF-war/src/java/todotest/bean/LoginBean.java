@@ -25,10 +25,12 @@ public class LoginBean implements Serializable{
     @EJB
     private UsuarioFacade usuarioFacade;
 
+    
     private String dni = "33333333P";
     private String password = "1234";
     protected Usuario user;
     protected Boolean error = false;
+    
     //private CurrentTest currentTest;
     //error 0 -> no hay error
     //error 1 -> usuario/contraseña incorrecta
@@ -82,6 +84,9 @@ public class LoginBean implements Serializable{
     }
 
     public String doLogin() {
+        
+        
+        
         this.user = usuarioFacade.find(this.dni);
         this.error = false;
         if (user == null) {

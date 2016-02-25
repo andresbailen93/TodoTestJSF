@@ -43,7 +43,7 @@
                     </a>
                     <div class="panel-body"> 
                         <div>
-                            <h:outputText value="Se ha modificado la configuración de los test seleccionados" rendered="#{activateTestBean.msg}"  class="alert alert-success small-margin"/>
+                            <h:outputText value="Se ha modificado la configuración de los test seleccionados" rendered="#{activateTestBean.msg}"  class="alert alert-success center-block small-margin"/>
                         </div>
 
                         <h:form>
@@ -59,7 +59,7 @@
                             
                         <div class="btn-group-vertical pull-right">
                             <h:commandButton type="Submit" action="#{activateTestBean.doActualizar()}" value="Guardar " class="btn btn-primary btn-md ">
-                                <i class="glyphicon glyphicon-save"></i>
+                               
                             </h:commandButton>
                             <a href="addTest.xhtml" class="btn btn-primary btn-md">
                                 <span class="glyphicon glyphicon-list-alt"></span> Añadir test</a>
