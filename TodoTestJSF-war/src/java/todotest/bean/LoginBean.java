@@ -5,6 +5,7 @@
  */
 package todotest.bean;
 
+import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -19,7 +20,7 @@ import todotest.entities.Usuario;
  */
 @ManagedBean
 @SessionScoped
-public class LoginBean {
+public class LoginBean implements Serializable{
 
     @EJB
     private UsuarioFacade usuarioFacade;
