@@ -28,16 +28,6 @@ public class TestListTeacherBean implements Serializable {
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
     private List<Test> testList;
-    private Test test;
-
-
-    public Test getTest() {
-        return test;
-    }
-
-    public void setTest(Test test) {
-        this.test = test;
-    }
     
     
     public LoginBean getLoginBean() {
@@ -68,7 +58,7 @@ public class TestListTeacherBean implements Serializable {
     }
     
     public String doAddQuestion(Test test){
-        this.test = test;
+        this.loginBean.setTestAdded(test);
         return "addQuestion";
     }
 }

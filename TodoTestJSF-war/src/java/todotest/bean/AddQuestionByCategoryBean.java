@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import todotest.ejb.CategoriaFacade;
 import todotest.ejb.PreguntaFacade;
@@ -29,23 +30,13 @@ import todotest.entities.Test;
  * @author andresbailen93
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class AddQuestionByCategoryBean implements Serializable {
-
-    @EJB
-    private TestFacade testFacade;
-
     @EJB
     private PreguntaFacade preguntaFacade;
 
     @EJB
     private CategoriaFacade categoriaFacade;
-
-    @ManagedProperty(value = "#{testListTeacherBean}")
-    private TestListTeacherBean testListTeacher;
-
-    @ManagedProperty(value = "#{addQuestionBean}")
-    private AddQuestionBean addQuestion;
 
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
@@ -55,14 +46,6 @@ public class AddQuestionByCategoryBean implements Serializable {
     private ArrayList<String> lis_numPreg;
     private int numPreg;
     private boolean addQuestions = false;
-
-    public AddQuestionBean getAddQuestion() {
-        return addQuestion;
-    }
-
-    public void setAddQuestion(AddQuestionBean addQuestion) {
-        this.addQuestion = addQuestion;
-    }
 
     public boolean isAddQuestions() {
         return addQuestions;
@@ -104,14 +87,6 @@ public class AddQuestionByCategoryBean implements Serializable {
         this.category = category;
     }
 
-    public TestListTeacherBean getTestListTeacher() {
-        return testListTeacher;
-    }
-
-    public void setTestListTeacher(TestListTeacherBean testListTeacher) {
-        this.testListTeacher = testListTeacher;
-    }
-
     public List<Categoria> getList_categoria() {
         return list_categoria;
     }
@@ -141,14 +116,14 @@ public class AddQuestionByCategoryBean implements Serializable {
         Categoria categoria = categoriaFacade.find(category);
         //Collection<Pregunta> lista_preguntas = lista_categoria.get(0).getPreguntaCollection();
 
-        List<Pregunta> lista_preguntas = preguntaFacade.findPreguntasByNum(categoria, addQuestion.getTest());
+        List<Pregunta> lista_preguntas = preguntaFacade.findPreguntasByNum(categoria, loginBean.getTestAdded());
 
         //test = testFacade.find(testLi);
         List<Pregunta> lista_preguntas_add = new ArrayList<>();
         //Si marcamos un numero superior de preguntas de las que hay no las inserta.
 
         for (int i = (lista_preguntas.size() - 1); i >= 0; i--) {
-            if (lista_preguntas.get(i).getTestCollection().contains((addQuestion.getTest()))) {
+            if (lista_preguntas.get(i).getTestCollection().contains((loginBean.getTestAdded()))) {
                 lista_preguntas.remove(i);
             }
         }
@@ -168,7 +143,7 @@ public class AddQuestionByCategoryBean implements Serializable {
             listaTest = p.getTestCollection();
 
             //if (!listaTest.contains(test)) {
-            listaTest.add(testListTeacher.getTest());
+            listaTest.add(loginBean.getTestAdded());
             p.setTestCollection(listaTest);
             preguntaFacade.edit(p);
             //}
