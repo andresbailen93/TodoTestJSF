@@ -42,7 +42,7 @@ public class AddQuestionBean implements Serializable {
     private PreguntaFacade preguntaFacade;
     @EJB
     private CategoriaFacade categoriaFacade;
-
+    
     @ManagedProperty(value = "#{testListTeacherBean}")
     private TestListTeacherBean testListTeacher;
 
@@ -50,6 +50,7 @@ public class AddQuestionBean implements Serializable {
     private Long category;
     private byte[] image;
     private Collection<Respuesta> respuestaCollection;
+    private ArrayList<String> numPreguntas;
     private boolean addQuestion = false;
     private boolean addCategory = false;
     private boolean errorAddCategory = false;
@@ -63,6 +64,14 @@ public class AddQuestionBean implements Serializable {
     private Test test;
 
     private List<Categoria> list_categoria;
+
+    public ArrayList<String> getNumPreguntas() {
+        return numPreguntas;
+    }
+
+    public void setNumPreguntas(ArrayList<String> numPreguntas) {
+        this.numPreguntas = numPreguntas;
+    }
 
     public Test getTest() {
         return test;
@@ -327,6 +336,10 @@ public class AddQuestionBean implements Serializable {
     }
     
     public String doRedirectByCategory() {
+        this.numPreguntas = new ArrayList<>();
+        for ( int i = 1; i <= 15; i++){
+            numPreguntas.add(String.valueOf(i));
+        }
         return "addQuestionByCategory";
     }
 
