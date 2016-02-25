@@ -12,7 +12,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import todotest.ejb.CategoriaFacade;
@@ -26,7 +28,7 @@ import todotest.entities.Test;
  *
  * @author andresbailen93
  */
-@Named(value = "addQuestionByCategoryBean")
+@ManagedBean
 @SessionScoped
 public class AddQuestionByCategoryBean implements Serializable {
 
@@ -50,6 +52,7 @@ public class AddQuestionByCategoryBean implements Serializable {
 
     private List<Categoria> list_categoria;
     private Long category;
+    private ArrayList<String> lis_numPreg;
     private int numPreg;
     private boolean addQuestions = false;
 
@@ -67,6 +70,14 @@ public class AddQuestionByCategoryBean implements Serializable {
 
     public void setAddQuestions(boolean addQuestions) {
         this.addQuestions = addQuestions;
+    }
+
+    public ArrayList<String> getLis_numPreg() {
+        return lis_numPreg;
+    }
+
+    public void setLis_numPreg(ArrayList<String> lis_numPreg) {
+        this.lis_numPreg = lis_numPreg;
     }
 
     public int getNumPreg() {
@@ -112,6 +123,14 @@ public class AddQuestionByCategoryBean implements Serializable {
     /**
      * Creates a new instance of AddQuestionByCategoryBean
      */
+    @PostConstruct
+    public void init() {
+        this.list_categoria = categoriaFacade.findAll();
+        lis_numPreg = new ArrayList<String>();
+        for (int i = 1; i < 15; i++) {
+            lis_numPreg.add(String.valueOf(i));
+        }
+    }
     
 
     public AddQuestionByCategoryBean() {
