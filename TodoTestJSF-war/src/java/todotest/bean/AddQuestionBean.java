@@ -63,6 +63,7 @@ public class AddQuestionBean implements Serializable {
     private String incorrectTestAnswer4 = "";
     private Test test;
 
+    
     private List<Categoria> list_categoria;
 
     public ArrayList<String> getNumPreguntas() {
