@@ -4,7 +4,6 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui"  
       >
     <h:head>
         <meta charset="UTF-8"/>
@@ -35,7 +34,6 @@
                 <ui:include src="teacherHeader.xhtml" />
             </ui:insert>
         </div>
-
         <div class="container" style="margin-top:80px; margin-bottom: 80px">
 
             <div class="col-sm-6 col-sm-offset-3">
@@ -46,25 +44,21 @@
                         Añadir pregunta
                     </a>
                     <div class="panel-body" style="margin: 15px">
-
-                        <div >     
-                            <h:outputText value="La Pregunta se ha añadido correctamente" rendered="#{addQuestionBean.addQuestion}" class="alert alert-success"/>
-                            <h:outputText value="La categoria se ha añadido correctamente" rendered="#{addQuestionBean.addCategory}" class="alert alert-success"/>
-                            <h:outputText value="No se pudo añadir la categoria" rendered="#{addQuestionBean.errorAddCategory}" class="alert alert-danger"/>
-
-                        </div>
                         <h:form id="addCategory">
 
                             <div class="form-group">
+                                <div>
+                                    <h:outputText value="La Pregunta se ha añadido correctamente" rendered="#{addQuestionBean.addQuestion}" class="alert alert-success"/>
+                                    <h:outputText value="La categoria se ha añadido correctamente" rendered="#{addQuestionBean.addCategory}" class="alert alert-success"/>
+                                    <h:outputText value="No se pudo añadir la categoria" rendered="#{addQuestionBean.errorAddCategory}" class="alert alert-danger"/>
+                                </div>
                                 <label class="control-label">Nueva categoría: </label>
-                                <h:inputText id="categoryname" class="form-control"  value="#{addQuestionBean.category}" required="true">
+                                <h:inputText id="categoryname" class="form-control"  value="#{addQuestionBean.categoryName}" required="true">
                                     <f:validateLength minimum="1" maximum="50"/>
                                 </h:inputText>
                                 <h:commandButton  class="btn btn-primary btn-xs pull-right" action="#{addQuestionBean.doAddCategory()}" value="Añadir Categoria"/>
                             </div> 
                         </h:form>
-
-
                         <h:form id="addQuestion">
 
                             <div class="form-group">
@@ -74,73 +68,32 @@
                                         <f:selectItems value="#{addQuestionBean.list_categoria}" var="categoria" itemValue="#{categoria.idCategoria}" itemLabel="#{categoria.nombre}">#{categoria.nombre}</f:selectItems>
                                     </h:selectOneMenu> 
                                 </div>
-
                             </div>
-                            <div class="form-group">
-
-                                <label for="Pregunta" class="control-label">Pregunta: </label>
-                                <div >
-                                    <h:inputTextarea id="pregunta" class="form-control" rows="3"  value="#{addQuestionBean.question}"></h:inputTextarea>
-                                </div>
-
+                            <label for="Pregunta" class="control-label">Pregunta: </label>
+                            <div>
+                                <h:inputTextarea id="pregunta" class="form-control" rows="3"  value="#{addQuestionBean.question}"></h:inputTextarea>
                             </div>
-                            <div class="form-group">
+                            <div id="answers">
+                                Introduce la respuesta correcta: 
+                                <h:inputText value="#{addQuestionBean.correctTestAnswer}" class="form-control" />
 
-                                <label for="Imagen" class="control-label">Selecciona una imagen:</label>
-                                <div>
-                                    <!-- <h:inputFile id="image" value="" class="btn"/>-->
-                                </div>
+                                Introduce la/s respuesta/s incorrectas:           
+                                <h:inputText value="#{addQuestionBean.incorrectTestAnswer1}" class="form-control" />
+                                <h:inputText value="#{addQuestionBean.incorrectTestAnswer2}" class="form-control" />
+                                <h:inputText value="#{addQuestionBean.incorrectTestAnswer3}" class="form-control" />
+                                <h:inputText value="#{addQuestionBean.incorrectTestAnswer4}" class="form-control" />
 
                             </div>
 
-                            <div class="form-group ">
 
-                                <label for="Respuestas" class="control-label" >Respuestas: </label>
-
-                                <div id="answers">
-                                    <div class="radio">
-                                        <label>
-                                            <p:selectOneRadio id="s1" value="" layout="pageDirection" >
-                                                <f:selectItem itemLabel="value 2" itemValue="v2" >
-                                                <p:inputText id="input2" value="#{myBean.input1Value}" />
-                                                </f:selectItem>
-                                                <f:selectItem itemLabel="value 3" itemValue="v3" >
-                                                <p:inputText id="input3" value="#{myBean.input1Value}" />
-                                                </f:selectItem>
-                                            </p:selectOneRadio>
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-
-                                    </div>
-                                </div>
-
-                                <div  id="answersadded">
-                                </div>
-                                <div class="form-group">
-                                    <div class="btn-group-vertical pull-left">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-xs " id="boton" name="ActionButton" value="0" >Guardar</button>
-                                    <button type="button" class="btn btn-primary btn-xs" id="addRespuesta"><i class="glyphicon glyphicon-plus"></i></button>
-                                    <button type="button" class="btn btn-primary btn-xs" id="removeRespuesta"><i class="glyphicon glyphicon-minus"></i></button>
-                                </div>
-                            </div>
-                        </h:form>
-
-                        <h:form id="accion">
-                            <div class="btn-group-vertical pull-right">
-                                <button type="submit" class="btn btn-primary btn-xs pull-right" id="boton" name="ActionButton" value="1">Añadir preguntas de una categoria</button>
-
-                                <button type="submit" class="btn btn-primary btn-xs pull-right" id="boton" name="ActionButton" value="2">Volver</button>
-                            </div>
+                            <h:commandButton  class="btn btn-primary btn-xs pull-right" action="#{addQuestionBean.doAddQuestion()}" value="Guardar Pregunta"/>
+                            <h:commandButton class="btn btn-primary btn-xs pull-right" action="#{addQuestionBean.doRedirectByCategory()}" value="Añadir Pregunta por Categoria"/>
                         </h:form>
                     </div>
                 </div>
-
             </div>
         </div>
+
         <div id="footer">
             <ui:insert name="footer" >
                 <ui:include src="footer.xhtml" />

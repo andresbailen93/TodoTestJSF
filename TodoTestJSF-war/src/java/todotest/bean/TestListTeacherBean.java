@@ -25,7 +25,17 @@ import todotest.entities.Test;
 public class TestListTeacherBean implements Serializable {
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
+    private Test test;
 
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
+    }
+    
+    
     public LoginBean getLoginBean() {
         return loginBean;
     }
@@ -42,7 +52,8 @@ public class TestListTeacherBean implements Serializable {
         return "testListTeacher";
     }
     
-    public String doAddQuestion(){
+    public String doAddQuestion(Test test){
+        this.test = test;
         return "addQuestion";
     }
 }

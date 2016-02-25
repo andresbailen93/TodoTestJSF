@@ -6,6 +6,7 @@
 package todotest.bean;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.servlet.http.Part;
 import todotest.aux.RespuestaManager;
 import todotest.ejb.CategoriaFacade;
 import todotest.ejb.PreguntaFacade;
+import todotest.ejb.RespuestaFacade;
 import todotest.entities.Categoria;
 import todotest.entities.Pregunta;
 import todotest.entities.Respuesta;
@@ -32,38 +34,112 @@ import todotest.entities.Test;
  */
 @ManagedBean
 @SessionScoped
-public class AddQuestionBean {
+public class AddQuestionBean implements Serializable {
 
+    @EJB
+    private RespuestaFacade respuestaFacade;
     @EJB
     private PreguntaFacade preguntaFacade;
     @EJB
     private CategoriaFacade categoriaFacade;
-    
-    private String category, question;
+
+    @ManagedProperty(value = "#{testListTeacherBean}")
+    private TestListTeacherBean testListTeacher;
+
+    private String question, categoryName;
+    private Long category;
     private byte[] image;
     private Collection<Respuesta> respuestaCollection;
     private boolean addQuestion = false;
     private boolean addCategory = false;
     private boolean errorAddCategory = false;
+    private boolean errorAddQuestion = false;
     private Categoria categoriaAdd;
+    private String correctTestAnswer = "";
+    private String incorrectTestAnswer1 = "";
+    private String incorrectTestAnswer2 = "";
+    private String incorrectTestAnswer3 = "";
+    private String incorrectTestAnswer4 = "";
     private Test test;
-    private List<RespuestaManager> nuevaRespuesta;
-    
 
-    //@ManagerProperty(value="#{activateTestBean}")
-    // private ActivateTestBean activateTestBean;
     private List<Categoria> list_categoria;
 
-    public List<RespuestaManager> getNuevaRespuesta() {
-        return nuevaRespuesta;
+    public Test getTest() {
+        return test;
     }
 
-    public void setNuevaRespuesta(List<RespuestaManager> nuevaRespuesta) {
-        this.nuevaRespuesta = nuevaRespuesta;
+    public void setTest(Test test) {
+        this.test = test;
     }
+
+    public boolean isErrorAddQuestion() {
+        return errorAddQuestion;
+    }
+
+    public void setErrorAddQuestion(boolean errorAddQuestion) {
+        this.errorAddQuestion = errorAddQuestion;
+    }
+
+    public String getIncorrectTestAnswer1() {
+        return incorrectTestAnswer1;
+    }
+
+    public void setIncorrectTestAnswer1(String incorrectTestAnswer1) {
+        this.incorrectTestAnswer1 = incorrectTestAnswer1;
+    }
+
+    public String getIncorrectTestAnswer2() {
+        return incorrectTestAnswer2;
+    }
+
+    public void setIncorrectTestAnswer2(String incorrectTestAnswer2) {
+        this.incorrectTestAnswer2 = incorrectTestAnswer2;
+    }
+
+    public String getIncorrectTestAnswer3() {
+        return incorrectTestAnswer3;
+    }
+
+    public void setIncorrectTestAnswer3(String incorrectTestAnswer3) {
+        this.incorrectTestAnswer3 = incorrectTestAnswer3;
+    }
+
+    public String getIncorrectTestAnswer4() {
+        return incorrectTestAnswer4;
+    }
+
+    public void setIncorrectTestAnswer4(String incorrectTestAnswer4) {
+        this.incorrectTestAnswer4 = incorrectTestAnswer4;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public TestListTeacherBean getTestListTeacher() {
+        return testListTeacher;
+    }
+
+    public void setTestListTeacher(TestListTeacherBean testListTeacher) {
+        this.testListTeacher = testListTeacher;
+    }
+
+    public String getCorrectTestAnswer() {
+        return correctTestAnswer;
+    }
+
+    public void setCorrectTestAnswer(String correctTestAnswer) {
+        this.correctTestAnswer = correctTestAnswer;
+    }
+
     public boolean isErrorAddCategory() {
         return errorAddCategory;
     }
+
     public void setErrorAddCategory(boolean errorAddCategory) {
         this.errorAddCategory = errorAddCategory;
     }
@@ -116,11 +192,11 @@ public class AddQuestionBean {
         this.respuestaCollection = respuestaCollection;
     }
 
-    public String getCategory() {
+    public Long getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Long category) {
         this.category = category;
     }
 
@@ -149,32 +225,83 @@ public class AddQuestionBean {
     @PostConstruct
     public void init() {
         list_categoria = categoriaFacade.findAll();
+        test = testListTeacher.getTest();
     }
-    
-    public String doRedirectAddquestion(Test test){
-        this.test = test;
-        return "addQuestion";
-    }
-    
+
     public String doAddQuestion() {
-        List<Categoria> lista_categor = categoriaFacade.findByName(category);
-        
-        
+        addCategory = false;
+        addQuestion = false;
+        this.errorAddCategory = false;
+        this.errorAddQuestion = false;
+        Categoria categoria = new Categoria();
+        categoria.setIdCategoria(category);
+        categoria = categoriaFacade.find(category);
         //Creamos la pregunta
         Pregunta pregunta = new Pregunta();
-        pregunta.setIdCategoria(lista_categor.get(0));
+        pregunta.setIdCategoria(categoria);
         pregunta.setImagen(null);
         pregunta.setTexto(question);
+
         List<Test> listaTest = new ArrayList<>();
-        listaTest.add(this.test); /*Test debera ser una inyeccion de dependecias o sacado de la sesion */
+        listaTest.add(this.testListTeacher.getTest());
+        /*Test debera ser una inyeccion de dependecias o sacado de la sesion */
         pregunta.setTestCollection(listaTest);
-        
         preguntaFacade.create(pregunta);
         
+        
+        if(question != null){
         //Añadir respuestas.
-        
-        
+        if (correctTestAnswer.length() !=0) {
+            Respuesta correctAnswer = new Respuesta();
+            correctAnswer.setCorrecta((short) 1);
+            correctAnswer.setIdPregunta(pregunta);
+            correctAnswer.setTexto(this.correctTestAnswer);
+            respuestaFacade.create(correctAnswer);
+        }
+        Respuesta incorrectAnswer;
+        if (incorrectTestAnswer1.length() !=0) {
+            incorrectAnswer = new Respuesta();
+            incorrectAnswer.setCorrecta((short) 0);
+            incorrectAnswer.setIdPregunta(pregunta);
+            incorrectAnswer.setTexto(this.incorrectTestAnswer1);
+            respuestaFacade.create(incorrectAnswer);
+        }
+
+        if (incorrectTestAnswer2.length() !=0) {
+            incorrectAnswer = new Respuesta();
+            incorrectAnswer.setCorrecta((short) 0);
+            incorrectAnswer.setIdPregunta(pregunta);
+            incorrectAnswer.setTexto(this.incorrectTestAnswer2);
+            respuestaFacade.create(incorrectAnswer);
+        }
+        if (incorrectTestAnswer3.length() !=0) {
+
+            incorrectAnswer = new Respuesta();
+            incorrectAnswer.setCorrecta((short) 0);
+            incorrectAnswer.setIdPregunta(pregunta);
+            incorrectAnswer.setTexto(this.incorrectTestAnswer3);
+            respuestaFacade.create(incorrectAnswer);
+        }
+        if (incorrectTestAnswer4.length() !=0) {
+
+            incorrectAnswer = new Respuesta();
+            incorrectAnswer.setCorrecta((short) 0);
+            incorrectAnswer.setIdPregunta(pregunta);
+            incorrectAnswer.setTexto(this.incorrectTestAnswer4);
+            respuestaFacade.create(incorrectAnswer);
+        }
+        }else{
+            this.errorAddQuestion = true;
+        }
         this.addQuestion = true;
+        this.categoryName = "";
+        this.question = "";
+        this.correctTestAnswer = "";
+        this.incorrectTestAnswer1 = "";
+        this.incorrectTestAnswer2 = "";
+        this.incorrectTestAnswer3 = "";
+        this.incorrectTestAnswer4 = "";
+
         return "addQuestion";
     }
 
@@ -182,14 +309,15 @@ public class AddQuestionBean {
         addCategory = false;
         addQuestion = false;
         this.errorAddCategory = false;
-        List<Categoria> listas_categorias = categoriaFacade.findByName(category);
-        
+        this.errorAddQuestion = false;
+        List<Categoria> listas_categorias = categoriaFacade.findByName(categoryName);
+
         if (listas_categorias.isEmpty()) { //No existe ninguno con el nombre. buscado
             this.categoriaAdd = new Categoria();
-            this.categoriaAdd.setNombre(category);
+            this.categoriaAdd.setNombre(categoryName);
             this.categoriaFacade.create(this.categoriaAdd);
             this.list_categoria.add(this.categoriaAdd);
-            
+
             this.addCategory = true;
             return "addQuestion";
         } else {
@@ -197,7 +325,9 @@ public class AddQuestionBean {
             return "addQuestion";
         }
     }
-
-
     
+    public String doRedirectByCategory() {
+        return "addQuestionByCategory";
+    }
+
 }
