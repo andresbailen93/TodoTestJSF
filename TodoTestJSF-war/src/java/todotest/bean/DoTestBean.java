@@ -289,6 +289,9 @@ public class DoTestBean {
             errNoAnswerSelected = true;
             return "testAnswer?faces-redirect=true";
         }
+        
+        if (currentQuestion == totalQuestions) 
+            lastQuestion = true;
 
         if (!lastQuestion && currentTest.getTimeLeft() > 0) { // Si hay preguntas
             isImageQuestion = false;
@@ -306,9 +309,6 @@ public class DoTestBean {
             answerList = (List<Respuesta>) question.getRespuestaCollection();
             Long seed = System.nanoTime();
             Collections.shuffle(answerList, new Random(seed));
-            if (currentQuestion == totalQuestions) {
-                lastQuestion = true;
-            }
         } else {
             // Se ha terminado el test
             currentTest.addUserAnswer(currentUserAnswer);

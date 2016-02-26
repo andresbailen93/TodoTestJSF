@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import todotest.ejb.UsuarioFacade;
 import todotest.entities.Examen;
+import todotest.entities.Usuario;
 
 /**
  *
@@ -92,16 +93,18 @@ public class ResultStudentBean {
     }
 
     public String doResultList() {
-        this.exam_list = (List<Examen>) loginBean.user.getExamenCollection();
+        // Problema de caché si se accede por loginBean
+        Usuario u =  this.usuarioFacade.find(loginBean.user.getDni());
+        this.exam_list = (List<Examen>) u.getExamenCollection();
         
-        this.success = usuarioFacade.totalSuccess(loginBean.user);
+        this.success = usuarioFacade.totalSuccess(u);
         try {
-            this.average = new BigDecimal(usuarioFacade.average(loginBean.user)).setScale(2, RoundingMode.CEILING);
+            this.average = new BigDecimal(usuarioFacade.average(u)).setScale(2, RoundingMode.CEILING);
         } catch (NumberFormatException e) {
             this.average = new BigDecimal(0);
         }
-        this.totalTest = usuarioFacade.totalTest(loginBean.user);
-        this.fails = usuarioFacade.totalFail(loginBean.user);
+        this.totalTest = usuarioFacade.totalTest(u);
+        this.fails = usuarioFacade.totalFail(u);
         
         return "resultsStudent";
     }

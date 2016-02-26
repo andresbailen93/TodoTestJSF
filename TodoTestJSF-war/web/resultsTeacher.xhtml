@@ -59,7 +59,7 @@
                                 </thead>
 
                                 <tbody>
-                                    <ui:repeat var="test" value="#{resultTeacherBean.loginBean.user.testCollection}">
+                                    <ui:repeat var="test" value="#{resultTeacherBean.testList}">
                                         <ui:repeat var="exam" value="#{test.examenCollection}">
                                             <tr>
                                                 <td>#{test.idTest}</td>

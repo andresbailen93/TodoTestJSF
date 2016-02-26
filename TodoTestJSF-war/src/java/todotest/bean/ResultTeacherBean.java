@@ -5,9 +5,14 @@
  */
 package todotest.bean;
 
+import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import todotest.ejb.UsuarioFacade;
+import todotest.entities.Test;
+import todotest.entities.Usuario;
 
 /**
  *
@@ -16,8 +21,12 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean
 @RequestScoped
 public class ResultTeacherBean {
+    @EJB
+    private UsuarioFacade usuarioFacade;
+    
     @ManagedProperty(value="#{loginBean}")
     private LoginBean loginBean;
+    private List<Test> testList;
 
     
     public LoginBean getLoginBean() {    
@@ -31,10 +40,22 @@ public class ResultTeacherBean {
         this.loginBean = loginBean;
     }
 
+    public List<Test> getTestList() {
+        return testList;
+    }
+
+    public void setTestList(List<Test> testList) {
+        this.testList = testList;
+    }
+    
+    
+
     public ResultTeacherBean() {
     }
     
     public String doResultList(){
+        Usuario u = usuarioFacade.find(loginBean.user.getDni());
+        testList = (List<Test>) u.getTestCollection();
         return "resultsTeacher";
     }
 }
